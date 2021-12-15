@@ -66,5 +66,5 @@ npm install
 ```cmd
 node app.js
 ```
-또한 루트 디렉토리에 .env 파일을 추가하여 express-session secret을 포함한 다수의 시스템 변수를 설정해주셔야 합니다.<br>
+또한 루트 디렉토리에 .env 파일을 추가하여 Session Secret을 포함한 다수의 시스템 변수를 설정해주셔야 합니다.<br>
 실행을 완료하였다면, [localhost:3000](http://localhost:3000) 에서 확인하세요.
