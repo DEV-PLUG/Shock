@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/basic.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/login.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/public/scripts/basic.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script type="module" src="/public/scripts/login.js"></script>
+    <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
+
+    <title>Shock | 로그인</title>
+</head>
+<body>
+    <div class="home-menu-box"></div>
+
+    <div class="login-box">
+        <h3>로그인</h3>
+        <form onsubmit="return false">
+            <div class="input_box">
+                <div class="input_title">이메일</div>
+                <input type="text" placeholder="이메일 또는 아이디를 입력하세요." id="manager_email_name" maxlength="320" autocomplete='off'>
+            </div>
+            <div class="input_box">
+                <div class="input_title">비밀번호</div>
+                <input type="password" placeholder="비밀번호를 입력하세요." id="manager_password" maxlength="50" autocomplete='off'>
+            </div>
+            <button class="btn-blue flex-center" id="login-login-btn">
+                <div class="btn-loading-box"><div class="btn-loading-circle"></div></div>
+                로그인
+                <span class="material-icons btn-icon">arrow_forward</span>
+            </button>
+        </form>
+        <h6>아직 회원이 아니신가요? <a href="/signup">회원가입</a></h6>
+    </div>
+
+    <div class="message-box"></div>
+</body>
+</html>

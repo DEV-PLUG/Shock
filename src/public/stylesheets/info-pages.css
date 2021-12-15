@@ -1,0 +1,33 @@
+.box {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: 90%;
+}
+.email-icon {
+    font-size: 10rem !important;
+    color: #666666;
+}
+h5 {
+    font-weight: normal;
+    margin: 20px 0 0;
+    font-size: 1rem !important;
+    line-height: 20px;
+}
+h6 {
+    margin: 20px 0 0;
+    font-weight: normal;
+}
+.link {
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-blue {
+    margin: 20px 0 0;
+    text-decoration: none;
+}
+.btn-blue-disabled {
+    margin: 20px 0 0;
+}

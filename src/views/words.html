@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/basic.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/home.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/words.css">
+
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js?ver=1.4.2'></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="/public/scripts/basic.js"></script>
+    <script src="/public/scripts/words.js" defer></script>
+
+    <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
+
+    <title>Shock | 단어장</title>
+</head>
+<body>
+
+    <div class="modal-background">
+        <div class="modal-box" id="edit-words-modal">
+            <div class="flex-between">
+                <div class="modal-title">단어장 편집하기</div>
+                <div id="edit-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="modal-edit-words-content1">
+                    <div class="input_box">
+                        <div class="input_title">단어장 이름</div>
+                        <input type="text" placeholder="단어장 이름을 입력해주세요." maxlength="20" id="edit-words-title" autocomplete="off">
+                        <div class="input_labels_box flex-between">
+                            <div class="input_label">단어장 이름을 입력해주세요.</div>
+                            <div class="input_text_num_label">최대 20자</div>
+                        </div>
+                    </div>
+                    <div class="input_box edit-words_input_box">
+                        <div class="input_title">영단어</div>
+                        <div class="edit-words-text-box"></div>
+                        <div class="words-content-btn words-content-btn-edit-add"><span class="material-icons words-content-btn-icon">add</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-end edit-words-modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="edit_words_next_btn"><div class="btn-loading-box" id="edit-words-btn-loading-box"><div class="btn-loading-circle"></div></div>수정하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="delete-words-modal">
+            <div class="flex-between">
+                <div class="modal-title">단어장 삭제하기</div>
+                <div id="delete-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <h3 class="modal-warn-title">2021년 12월 8일<br>단어장을<br>삭제하시겠어요?</h3>
+                <h6 class="modal-warn-des">단어장을 삭제해도, <br>공유한 단어장에는 영향을 미치지 않아요.</h6>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-red flex" id="delete_words_next_btn"><div class="btn-loading-box" id="delete_words-btn-loading-box"><div class="btn-loading-circle"></div></div>삭제하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="create-words-modal">
+            <div class="flex-between">
+                <div class="modal-title">단어장 추가하기</div>
+                <div id="create-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="modal-add-words-content1">
+                    <div class="input_box">
+                        <div class="input_title">단어장 이름</div>
+                        <input type="text" placeholder="단어장 이름을 입력해주세요." maxlength="20" id="words-title" autocomplete="off">
+                        <div class="input_labels_box flex-between">
+                            <div class="input_label">단어장 이름을 입력해주세요.</div>
+                            <div class="input_text_num_label">최대 20자</div>
+                        </div>
+                    </div>
+                    <div class="input_box">
+                        <div class="input_title">단어 개수</div>
+                        <input type="text" placeholder="단어의 개수를 입력해주세요." maxlength="3" id="words-count" value="1">
+                        <div class="input_labels_box flex-between">
+                            <div class="input_label">단어의 개수를 입력해주세요.</div>
+                            <div class="input_text_num_label">최대 100개</div>
+                        </div>
+                    </div>
+                    <div class="input_box">
+                        <div class="input_title">영단어</div>
+                        <div class="words-text-box">
+                            <input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" id="words-text" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-add-words-content2">
+                    <video width="80" id="add-words-check">
+                        <source id="add-words-check-source" type="video/mp4" src="/resources/check.mp4"/>
+                    </video>
+                    <div class="add-words-check-title">단어장 생성 완료</div>
+                    <div class="add-words-check-des">단어장 생성을 완료했어요!</div>
+                </div>
+            </div>
+
+            <div class="modal-end add-words-modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="create_words_next_btn"><div class="btn-loading-box" id="add-words-btn-loading-box"><div class="btn-loading-circle"></div></div>추가하기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-menu-box"></div>
+
+    <div class="words-box">
+        <div class="flex-between">
+            <h3>단어장 관리</h3>
+            <div class="btn-blue add-words-btn"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
+        </div>
+
+        <div class="btn-loading-box2" id="words-load-loading-box"><div class="btn-loading-circle2"></div></div>
+        <div class="no-words">
+            이런이런..! 아무런 단어장이 없어요!<br><br>
+            <div class="btn-blue add-words-btn2"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
+        </div>
+
+        <div class="words-box-wrap"></div>
+    </div>
+
+    <div class="message-box"></div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/basic.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/home.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/learn.css">
+
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js?ver=1.4.2'></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="/public/scripts/basic.js"></script>
+    <script src="/public/scripts/learn.js" defer></script>
+
+    <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
+
+    <title>Shock | 학습</title>
+</head>
+<body>
+
+    <div class="modal-background">
+        <div class="modal-box" id="print-words-modal">
+            <div class="flex-between">
+                <div class="modal-title">출력하기</div>
+                <div id="print-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="flex" onclick="radio('select-print-type', 'select-print-type1')">
+                    <div class="radio select-print-type" id="select-print-type1">
+                        <div class="radio-circle"></div>
+                    </div>
+                    <span style="line-height: 27px; margin: 0 10px 0 10px">단어 출력하기 - 전체</span>
+                </div>
+                <div class="flex" onclick="radio('select-print-type', 'select-print-type2')">
+                    <div class="radio select-print-type" id="select-print-type2">
+                        <div class="radio-circle"></div>
+                    </div>
+                    <span style="line-height: 27px; margin: 0 10px 0 10px">단어 출력하기 - 뜻만 보기</span>
+                </div>
+                <div class="flex" onclick="radio('select-print-type', 'select-print-type3')">
+                    <div class="radio select-print-type" id="select-print-type3">
+                        <div class="radio-circle"></div>
+                    </div>
+                    <span style="line-height: 27px; margin: 0 10px 0 10px">단어 출력하기 - 단어만 보기</span>
+                </div>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="print_words_next_btn">출력하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="learn-words-modal">
+            <div class="flex-between">
+                <div class="modal-title">학습하기</div>
+                <div id="learn-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="content-box">
+                    <div class="flex" onclick="radio('select-learn-type', 'select-learn-type1')">
+                        <div class="radio select-learn-type" id="select-learn-type1">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 전체</span>
+                    </div>
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type2">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 뜻만 보기(추후 출시)</span>
+                    </div>
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type3">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 단어만 보기(추후 출시)</span>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="flex">
+                        <div class="radio select-learn-type" id="select-learn-type4">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">테스트 - 전체 랜덤 테스트(추후 출시)</span>
+                    </div>
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type5">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">테스트 - 뜻만 테스트(추후 출시)</span>
+                    </div>
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type6">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">테스트 - 단어만 테스트(추후 출시)</span>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type7">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">복습 하기 - 최근(3일) 틀린문제 전체(추후 출시)</span>
+                    </div>
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type8">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">복습 하기 - 최근(3일) 틀린문제 뜻만 복습(추후 출시)</span>
+                    </div>
+                    <div class="flex" onclick="">
+                        <div class="radio select-learn-type" id="select-learn-type9">
+                            <div class="radio-circle"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">복습 하기 - 최근(3일) 틀린문제 단어만 복습(추후 출시)</span>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="checkbox" id="timeout-checkbox">
+                        <div class="checkbox-check"></div>
+                    </div>
+                    <span style="line-height: 27px; margin: 0 0 0 10px">시간 제한 적용하기(추후 출시)</span>
+                </div>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="learn_words_next_btn">학습 시작하기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-menu-box"></div>
+
+    <div class="words-box">
+        <div class="flex-between">
+            <h3>학습</h3>
+        </div>
+
+        <div class="btn-loading-box2" id="words-load-loading-box"><div class="btn-loading-circle2"></div></div>
+        <div class="no-words">
+            이런이런..! 아무런 단어장이 없어요!<br><br>
+            <div class="btn-blue add-words-btn2"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
+        </div>
+
+        <div class="words-box-wrap"></div>
+    </div>
+
+    <div class="message-box"></div>
+</body>
+</html>

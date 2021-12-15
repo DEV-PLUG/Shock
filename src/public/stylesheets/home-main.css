@@ -1,0 +1,12 @@
+body {
+    background-image: url('https://cdn.pixabay.com/photo/2016/06/01/06/26/open-book-1428428_1280.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.home-title {
+    color: white;
+}
+.home-title-des {
+    color: white;
+}

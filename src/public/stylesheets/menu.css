@@ -1,0 +1,121 @@
+.home-menu {
+    width: 100%;
+    height: 75px;
+
+    padding: 10px 300px;
+    box-sizing: border-box;
+
+    z-index: 50;
+
+    transition: .2s;
+    transition-property: background-color;
+
+    position: fixed;
+    top: 0;
+}
+.menu-Sellation-login-btn .btn-icon {
+    line-height: 40px;
+}
+.menu-Sellation-profile {
+    width: 55px;
+    height: 55px;
+
+    background-size: 65px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('/resources/favicon-png2.png');
+
+    border-radius: 50px;
+    cursor: pointer;
+}
+.menu-Sellation-login-btn {
+    width: auto;
+    height: 40px;
+
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    text-align: center;
+    line-height: 40px;
+
+    border-radius: 5px;
+
+    background-color: white;
+
+    margin: 7.5px 0;
+
+    transition: .2s;
+    transition-property: background-color;
+
+    cursor: pointer;
+}
+.menu-Sellation-login-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+.menu-Sellation-signup-btn {
+    width: auto;
+    height: 40px;
+
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    color: white;
+
+    text-align: center;
+    line-height: 40px;
+
+    border-radius: 5px;
+
+    margin: 7.5px 0 7.5px 10px;
+
+    background-color: #1A73E8;
+    box-shadow: 0 0 20px rgb(26 104 206 / 40%);
+
+    transition: .2s;
+    transition-property: background-color;
+
+    cursor: pointer;
+}
+.menu-Sellation-signup-btn:hover {
+    background-color: #1A68CE;
+}
+.menu-menu-text {
+    margin: 10px 10px 10px 0;
+
+    cursor: pointer;
+
+    border-radius: 3px;
+
+    line-height: 35px;
+
+    padding: 0 20px;
+
+    font-size: 1rem;
+    font-weight: normal;
+
+    width: auto;
+    height: 35px;
+
+    transition: .2s;
+    transition-property: background-color;
+
+    text-decoration: none;
+
+    color: #333333;
+}
+.menu-menu-text:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.menu-menu-box {
+    margin: 0 0 0 20px;
+}
+
+@media all and (max-width: 1150px) {  
+    .home-menu {
+        padding: 10px 20px;
+    }
+
+    .menu-menu-text {
+        padding: 0 5px;
+    }
+}

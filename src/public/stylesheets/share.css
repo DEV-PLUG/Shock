@@ -1,0 +1,42 @@
+.box_ {
+    margin: 160px auto;
+    width: 500px;
+}
+.title {
+    font-size: 60px;
+    font-weight: bold;
+}
+.des {
+    margin: 20px 0;
+    line-height: 20px;
+    font-size: 15px;
+    color: #666666;
+}
+
+.words-box {
+    margin: 50px 0 0;
+    width: 500px;
+}
+.words-box-box {
+    width: auto;
+    height: 95px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 10%);
+    margin: 0 0 20px;
+    border-radius: 10px;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+.words-title {
+    font-size: 30px;
+    font-weight: bold;
+}
+.words-mean {
+    color: #666666;
+    margin: 5px 0 0;
+}
+#add-words {
+    width: 500px;
+    margin: 50px 0 0;
+    text-align: center;
+}

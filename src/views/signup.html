@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/basic.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/signup.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/public/scripts/basic.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script src="/public/scripts/signup.js"></script>
+    <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
+
+    <title>Shock | 회원가입</title>
+</head>
+<body>
+    <div class="home-menu-box"></div>
+
+    <div class="login-box">
+        <h3>회원가입</h3>
+        <form onsubmit="return false">
+            <div class="input_box">
+                <div class="input_title">아이디</div>
+                <input type="text" placeholder="사용할 아이디를 입력하세요." id="user_name" maxlength="20" autocomplete='off'>
+                <div class="input_labels_box flex-between">
+                    <div class="input_label">생성한 상점에 아이디가 표시돼요.</div>
+                    <div class="input_text_num_label">최대 20자</div>
+                </div>
+            </div>
+            <div class="input_box">
+                <div class="input_title">이메일</div>
+                <input type="text" placeholder="이메일을 입력하세요." id="user_email" maxlength="320" autocomplete='off'>
+                <div class="input_labels_box flex-between">
+                    <div class="input_label">여러 알림을 받을 이메일을 입력하세요.</div>
+                    <div class="input_text_num_label">최대 320자</div>
+                </div>
+            </div>
+            <div class="input_box">
+                <div class="input_title">비밀번호</div>
+                <input type="password" placeholder="비밀번호를 입력하세요." id="user_password" maxlength="50" autocomplete='off'>
+                <div class="input_labels_box flex-between">
+                    <div class="input_label">숫자와 특수문자를 포함한 5자 이상의 문자여야 해요.</div>
+                    <div class="input_text_num_label">최대 50자</div>
+                </div>
+            </div>
+            <div class="input_box">
+                <div class="input_title">비밀번호 재입력</div>
+                <input type="password" placeholder="비밀번호를 재입력하세요." id="user_re_password" maxlength="50" autocomplete='off'>
+                <div class="input_labels_box flex-between">
+                    <div class="input_label">입력한 비밀번호를 다시 입력해주세요.</div>
+                </div>
+            </div>
+            <div class="document-agreement-box">
+                <div class="flex checkbox-box" id="signup-policy-checkbox-box">
+                    <div class="checkbox" id="signup-policy-checkbox">
+                        <div class="checkbox-check"></div>
+                    </div>
+                    <span style="line-height: 27px; margin: 0 0 0 10px"><a href="/policy" target="_blank">이용약관</a>에 동의합니다.</span>
+                </div>
+                <div class="flex checkbox-box" id="signup-privacy-checkbox-box">
+                    <div class="checkbox" id="signup-privacy-checkbox">
+                        <div class="checkbox-check"></div>
+                    </div>
+                    <span style="line-height: 27px; margin: 0 0 0 10px"><a href="/privacy" target="_blank">개인정보처리방침</a>에 동의합니다.</span>
+                </div>
+            </div>
+            <button class="btn-blue-disabled flex-center" id="signup-signup-btn">
+                <div class="btn-loading-box"><div class="btn-loading-circle"></div></div>
+                회원가입
+                <span class="material-icons btn-icon">arrow_forward</span>
+            </button>
+        </form>
+        <h6>이미 회원가입 하셨나요? <a href="/login">로그인</a></h6>
+    </div>
+
+    <div class="message-box"></div>
+</body>
+</html>

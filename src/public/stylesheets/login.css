@@ -1,0 +1,36 @@
+.input_title {
+    margin: 0 0 5px !important;
+}
+h3 {
+    margin: 0 0 30px;
+}
+.login-box {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 450px;
+}
+.btn-icon {
+    margin: 0 0 0 5px !important;
+}
+#login-login-btn {
+    margin: 20px 0 0;
+    width: 450px;
+    text-align: center;
+}
+.btn-loading-box {
+    display: none;
+}
+h6 {
+    text-align: center;
+    margin: 40px 0 0;
+    font-weight: normal;
+}
+a {
+    color: #1A73E8;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
