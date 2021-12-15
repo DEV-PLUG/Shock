@@ -164,13 +164,13 @@ $(document).ready(function () {
                             });
                         });
                         $(document.querySelectorAll('.words-content-btn-share')).click(function () {
-                            navigator.clipboard.writeText(`http://localhost:8080/dashboard/words/share/${$(this).attr("id")}`)
+                            navigator.clipboard.writeText(`https://shock-english.ml/dashboard/words/share/${$(this).attr("id")}`)
                                 .then(() => {
                                 display_message('클립보드에 공유 링크를 복사했어요!', 'green');
                             })
                                 .catch(err => {
                                 display_message('클립보드 복사를 지원하지 않는 브라우저인 것 같아요! 대신 새창으로 링크를 열어드렸어요!', 'yellow');
-                                var win = window.open(`http://localhost:8080/dashboard/words/share/${$(this).attr("id")}`, '_blank');
+                                var win = window.open(`https://shock-english.ml/dashboard/words/share/${$(this).attr("id")}`, '_blank');
                                 win.focus();
                             })
                         });
