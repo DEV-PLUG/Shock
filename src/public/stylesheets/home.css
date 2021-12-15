@@ -70,5 +70,22 @@ body {
 }
 
 @media all and (max-width: 1150px) {
-
+    .home-title {
+        font-size: 2.5rem;
+        line-height: 50px;
+        width: 100%;
+    }
+    .home-title-des {
+        font-size: 0.8rem;
+    }
+    .home-title-box {
+        width: 100%;
+    }
+    .home-title-Sellation-signup-btn {
+        width: auto;
+        font-size: 15px;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 17px;
+    }
 }
