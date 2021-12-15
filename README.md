@@ -1,5 +1,7 @@
 # Shock - 내가 골라 외우는 영단어
 
+[![CodeFactor](https://www.codefactor.io/repository/github/dev-plug/shock/badge)](https://www.codefactor.io/repository/github/dev-plug/shock)
+
 ## ❓ Shock 서비스가 뭐에요?   
 - **Shock**는 **<u>내가 직접 고른 영단어를 쉽게 외울 수 있게</u>** 하기 위해 만들었습니다.  
 - 처음에는 가족의 부탁으로 만들어서, 조금씩 살을 붙이다 보니 이렇게 되었습니다.
