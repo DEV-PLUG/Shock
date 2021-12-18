@@ -1,12 +1,11 @@
+$(".home-menu-box").load("/views/partials/menu.html");
+
 $(document).ready(function () {
 
     // 모바일 기기 인식
     if(navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)){
         location.href = '/mobile'
     }
-
-    // 메뉴 로드
-    $(".home-menu-box").load("/views/partials/menu.html");
 
     // 이메일, 비밀번호 텍스트 변경 이벤트 감지
     $("#manager_email_name").on("propertychange change paste input", function() {

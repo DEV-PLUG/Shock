@@ -103,11 +103,26 @@
                             <div class="input_text_num_label">최대 100개</div>
                         </div>
                     </div>
+                    <div class="flex words-count-info">
+                        <div class="btn-icon material-icons">info</div>
+                        개수를 변경하면 변경사항이 삭제되니, 처음에 잘 지정해주세요.<br>개수를 줄이려면 단어 입력칸에 아무것도 입력하지 마세요.
+                    </div>
                     <div class="input_box">
                         <div class="input_title">영단어</div>
                         <div class="words-text-box">
                             <input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" id="words-text" autocomplete="off">
                         </div>
+                    </div>
+
+                    <div class="flex words-count-info">
+                        <div class="btn-icon material-icons">info</div>
+                        영단어는 파파고 번역 API를 통해 번역됩니다.<br>정확하지 않은 뜻이나 다양한 뜻을 표시하지 못할 수 있습니다.
+                    </div>
+                    <div class="flex" id="custom-mean-checkbox-flex">
+                        <div class="checkbox" id="custom-mean-checkbox">
+                            <div class="checkbox-check"></div>
+                        </div>
+                        <span style="line-height: 27px; margin: 0 0 0 10px">뜻 직접 입력하기</span>
                     </div>
                 </div>
                 <div class="modal-add-words-content2">

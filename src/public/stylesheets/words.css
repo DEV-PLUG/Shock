@@ -12,8 +12,8 @@ h3 {
     font-size: 15px !important;
     border-radius: 5px;
 }
-#words-text {
-    margin: 0 0 5px;
+.words-text {
+    margin: 0 0 5px !important;
 }
 #add-words-check {
     margin: 40px auto;
@@ -131,9 +131,24 @@ h3 {
     width: 405px !important;
     margin: 0 0 5px !important;
 }
+.edit-words-mean {
+    width: 405px !important;
+}
 .words-content-btn-edit-delete {
     margin: 10px auto !important;
 }
 .words-content-btn-edit-add {
     margin: 10px auto !important;
+}
+
+.words-count-info {
+    font-size: 15px;
+    color: #666666;
+    margin: 10px 0 0;
+}
+.words-count-info .btn-icon {
+    margin: 5px 5px 5px 0;
+}
+#custom-mean-checkbox-flex {
+    margin: 10px 0 0;
 }

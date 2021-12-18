@@ -1,11 +1,11 @@
+$(".home-menu-box").load("/views/partials/menu.html");
+
 $(document).ready(function () {
 
     // 모바일 기기 인식
     if(navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)){
         location.href = '/mobile'
     }
-
-    $(".home-menu-box").load("/views/partials/menu.html");
 
     document.querySelector('.btn-loading-box').style.display = 'none';
 
@@ -100,7 +100,6 @@ $(document).ready(function () {
                     }),       
                     success: function(result) {
                         if (result) {
-                            console.log(result)
                             if(result.success == true) location.href = '/signup/success';
                             else display_message('알 수 없는 오류가 발생했습니다.(3)', 'red');
                         } else {

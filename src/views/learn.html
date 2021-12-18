@@ -15,6 +15,10 @@
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js?ver=1.4.2'></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="/public/scripts/basic.js"></script>
     <script src="/public/scripts/learn.js" defer></script>
 
@@ -76,17 +80,17 @@
                         </div>
                         <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 전체</span>
                     </div>
-                    <div class="flex" onclick="">
+                    <div class="flex" onclick="radio('select-learn-type', 'select-learn-type2')">
                         <div class="radio select-learn-type" id="select-learn-type2">
                             <div class="radio-circle"></div>
                         </div>
-                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 뜻만 보기(추후 출시)</span>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 뜻만 보기</span>
                     </div>
-                    <div class="flex" onclick="">
+                    <div class="flex" onclick="radio('select-learn-type', 'select-learn-type3')">
                         <div class="radio select-learn-type" id="select-learn-type3">
                             <div class="radio-circle"></div>
                         </div>
-                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 단어만 보기(추후 출시)</span>
+                        <span style="line-height: 27px; margin: 0 10px 0 10px">단어 보기 - 단어만 보기</span>
                     </div>
                 </div>
                 <div class="content-box">
@@ -162,6 +166,10 @@
         <div class="words-box-wrap"></div>
     </div>
 
+    <table>
+    </table>
+
     <div class="message-box"></div>
+    <div class="message-box2"></div>
 </body>
 </html>

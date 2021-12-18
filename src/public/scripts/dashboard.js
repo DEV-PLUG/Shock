@@ -1,3 +1,1 @@
-$(document).ready(function () {
-    $(".home-menu-box").load("/views/partials/dashboard-menu.html");
-});
+$(".home-menu-box").load("/views/partials/dashboard-menu.html");

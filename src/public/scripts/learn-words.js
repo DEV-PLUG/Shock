@@ -1,6 +1,9 @@
+$(".home-menu-box").load("/views/partials/dashboard-menu.html");
+
 $(document).ready(function () {
-    $(".home-menu-box").load("/views/partials/dashboard-menu.html");
     const words_id = location.href.split('/')[5].split('?')[0]
+    const words_type = location.href.split('/')[5].split('?')[1].split('=')[1]
+    console.log(words_type)
 
     var word_content;
     function load_words() {
@@ -15,8 +18,16 @@ $(document).ready(function () {
                         document.querySelector('#before').classList.add('btn-gray-disabled');
                         document.querySelector('#before').classList.remove('btn-gray');
 
-                        document.querySelector('.words-word').innerText = word_content.words[0][0];
-                        document.querySelector('.words-mean').innerText = word_content.words[0][1];
+                        if(words_type == 'words') {
+                            document.querySelector('.words-word').innerText = word_content.words[0][0];
+                            document.querySelector('.words-mean').innerText = word_content.words[0][1];
+                        } else if(words_type == 'words-ko') {
+                            document.querySelector('.words-word').innerText = word_content.words[0][1];
+                            document.querySelector('.words-mean').style.display = 'none';
+                        } else if(words_type == 'words-en') {
+                            document.querySelector('.words-word').innerText = word_content.words[0][0];
+                            document.querySelector('.words-mean').style.display = 'none';
+                        }
                         document.querySelector('.words-count').innerText = `${word_content.words.length}개의 단어중 / 1번째 단어`;
                     }
                 } else {
@@ -35,8 +46,14 @@ $(document).ready(function () {
     $('.btn-blue').click(function () {
         if(word_content.words.length - 1 > index) {
             index++;
-            document.querySelector('.words-word').innerText = word_content.words[index][0];
-            document.querySelector('.words-mean').innerText = word_content.words[index][1];
+            if(words_type == 'words') {
+                document.querySelector('.words-word').innerText = word_content.words[index][0];
+                document.querySelector('.words-mean').innerText = word_content.words[index][1];
+            } else if(words_type == 'words-ko') {
+                document.querySelector('.words-word').innerText = word_content.words[index][1];
+            } else if(words_type == 'words-en') {
+                document.querySelector('.words-word').innerText = word_content.words[index][0];
+            }
             document.querySelector('.words-count').innerText = `${word_content.words.length}개의 단어중 / ${index + 1}번째 단어`;
 
             if(index != 0) {
@@ -52,8 +69,14 @@ $(document).ready(function () {
     $('.btn-gray').click(function () {
         if(0 < index) {
             index--;
-            document.querySelector('.words-word').innerText = word_content.words[index][0];
-            document.querySelector('.words-mean').innerText = word_content.words[index][1];
+            if(words_type == 'words') {
+                document.querySelector('.words-word').innerText = word_content.words[index][0];
+                document.querySelector('.words-mean').innerText = word_content.words[index][1];
+            } else if(words_type == 'words-ko') {
+                document.querySelector('.words-word').innerText = word_content.words[index][1];
+            } else if(words_type == 'words-en') {
+                document.querySelector('.words-word').innerText = word_content.words[index][0];
+            }
             document.querySelector('.words-count').innerText = `${word_content.words.length}개의 단어중 / ${index + 1}번째 단어`;
 
             if(index == 0) {

@@ -1,5 +1,19 @@
+$(".home-menu-box").load("/views/partials/dashboard-menu.html");
+
 $(document).ready(function () {
-    $(".home-menu-box").load("/views/partials/dashboard-menu.html");
+
+    $('#custom-mean-checkbox-flex').click(function () {
+        checkbox('custom-mean');
+        if(document.querySelector('#custom-mean-checkbox').classList.contains('checkbox-focus')) {
+            for(var q = 0; q < document.querySelectorAll('.words-mean').length; q++) {
+                document.querySelectorAll('.words-mean')[q].style.display = 'block';
+            }
+        } else {
+            for(var q = 0; q < document.querySelectorAll('.words-mean').length; q++) {
+                document.querySelectorAll('.words-mean')[q].style.display = 'none';
+            }
+        }
+    });
 
     $('.add-words-btn2').click(function () {
         document.querySelector('#add-words-btn-loading-box').style.display = 'none';
@@ -9,8 +23,11 @@ $(document).ready(function () {
         document.querySelector('#words-title').classList.remove('input-red');
         document.querySelector('#words-count').classList.remove('input-red');
 
+        document.querySelector('#custom-mean-checkbox').classList.remove('checkbox-focus');
+
         $('.words-text-box').empty();
-        $('.words-text-box').append('<input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" id="words-text" autocomplete="off">');
+        $('.words-text-box').append('<input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="words-text" autocomplete="off">');
+        $('.words-text-box').append('<input type="text" placeholder="뜻을 입력해주세요. 원하지 않다면 비워두세요.(최대 20자)" maxlength="20" class="words-mean" autocomplete="off" style="display: none;">');
 
         document.querySelector('.add-words-modal-end').style.display = 'block';
         document.querySelector('.modal-add-words-content1').style.display = 'block';
@@ -37,8 +54,11 @@ $(document).ready(function () {
         document.querySelector('#words-title').classList.remove('input-red');
         document.querySelector('#words-count').classList.remove('input-red');
 
+        document.querySelector('#custom-mean-checkbox').classList.remove('checkbox-focus');
+
         $('.words-text-box').empty();
-        $('.words-text-box').append('<input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" id="words-text" autocomplete="off">');
+        $('.words-text-box').append('<input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="words-text" autocomplete="off">');
+        $('.words-text-box').append('<input type="text" placeholder="뜻을 입력해주세요. 원하지 않다면 비워두세요.(최대 20자)" maxlength="20" class="words-mean" autocomplete="off" style="display: none;">');
 
         document.querySelector('.add-words-modal-end').style.display = 'block';
         document.querySelector('.modal-add-words-content1').style.display = 'block';
@@ -103,12 +123,12 @@ $(document).ready(function () {
                                             $('.edit-words_input_box').append('<div class="words-content-btn words-content-btn-edit-add"><span class="material-icons words-content-btn-icon">add</span></div>');
 
                                             for(var k = 0; k < result.content.words.length; k++) {
-                                                $('.edit-words-text-box').append(`<div class="flex-between"><input type="text" value="${result.content.words[k][0]}" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="edit-words-text" id="edit-words-text" autocomplete="off"><div class="words-content-btn words-content-btn-edit-delete" id="${k}"><span class="material-icons words-content-btn-icon">delete</span></div></div>`);
+                                                $('.edit-words-text-box').append(`<div class="flex-between"><div style="width: 405px;"><input type="text" value="${result.content.words[k][0]}" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="edit-words-text" autocomplete="off"><input type="text" value="${result.content.words[k][1]}" placeholder="뜻을 입력해주세요. 원하지 않다면 비워두세요.(최대 20자)" maxlength="20" class="edit-words-mean" autocomplete="off"></div><div class="words-content-btn words-content-btn-edit-delete" id="${k}"><span class="material-icons words-content-btn-icon">delete</span></div></div>`);
                                             }
                                             modal('edit-words');
 
                                             $(document.querySelector('.words-content-btn-edit-add')).click(function () {
-                                                $('.edit-words-text-box').append(`<div class="flex-between"><input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="edit-words-text" id="edit-words-text" autocomplete="off"><div class="words-content-btn words-content-btn-edit-delete" id="${k++}"><span class="material-icons words-content-btn-icon">delete</span></div></div>`);
+                                                $('.edit-words-text-box').append(`<div class="flex-between"><div style="width: 405px;"><input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="edit-words-text" autocomplete="off"><input type="text" placeholder="뜻을 입력해주세요. 원하지 않다면 비워두세요.(최대 20자)" maxlength="20" class="edit-words-mean" autocomplete="off"></div><div class="words-content-btn words-content-btn-edit-delete" id="${k++}"><span class="material-icons words-content-btn-icon">delete</span></div></div>`);
 
                                                 $(document.querySelectorAll('.words-content-btn-edit-delete')[document.querySelectorAll('.words-content-btn-edit-delete').length - 1]).click(function () {
                                                     if(document.querySelectorAll('.words-content-btn-edit-delete').length <= 1) {
@@ -164,13 +184,13 @@ $(document).ready(function () {
                             });
                         });
                         $(document.querySelectorAll('.words-content-btn-share')).click(function () {
-                            navigator.clipboard.writeText(`https://shock-english.ml/dashboard/words/share/${$(this).attr("id")}`)
+                            navigator.clipboard.writeText(`http://localhost:8080/dashboard/words/share/${$(this).attr("id")}`)
                                 .then(() => {
                                 display_message('클립보드에 공유 링크를 복사했어요!', 'green');
                             })
                                 .catch(err => {
                                 display_message('클립보드 복사를 지원하지 않는 브라우저인 것 같아요! 대신 새창으로 링크를 열어드렸어요!', 'yellow');
-                                var win = window.open(`https://shock-english.ml/dashboard/words/share/${$(this).attr("id")}`, '_blank');
+                                var win = window.open(`http://localhost:8080/dashboard/words/share/${$(this).attr("id")}`, '_blank');
                                 win.focus();
                             })
                         });
@@ -253,18 +273,19 @@ $(document).ready(function () {
         } else {
             edit_words_text_final = [];
 
-            for(var q = 0; q < document.querySelectorAll('#edit-words-text').length; q++) {
-                if(document.querySelectorAll('#edit-words-text')[q].value == '' || document.querySelectorAll('#edit-words-text')[q].value.length > 50) document.querySelectorAll('#edit-words-text')[q].classList.add('input-red');
-                else if(!eng.test(document.querySelectorAll('#edit-words-text')[q].value)) {
-                    document.querySelectorAll('#edit-words-text')[q].classList.add('input-red');
+            for(var q = 0; q < document.querySelectorAll('.edit-words-text').length; q++) {
+                if(document.querySelectorAll('.edit-words-text')[q].value == '' || document.querySelectorAll('.edit-words-text')[q].value.length > 50) document.querySelectorAll('.edit-words-text')[q].classList.add('input-red');
+                else if(!eng.test(document.querySelectorAll('.edit-words-text')[q].value)) {
+                    document.querySelectorAll('.edit-words-text')[q].classList.add('input-red');
                 }
                 else {
-                    document.querySelectorAll('#edit-words-text')[q].classList.remove('input-red');
-                    edit_words_text_final.push(document.querySelectorAll('#edit-words-text')[q].value);
+                    document.querySelectorAll('.edit-words-text')[q].classList.remove('input-red');
+                    edit_words_text_final.push([ document.querySelectorAll('.edit-words-text')[q].value, document.querySelectorAll('.edit-words-mean')[q].value ]);
                 }
             }
 
-            if(edit_words_text_final.length == document.querySelectorAll('#edit-words-text').length) {
+            if(edit_words_text_final.length == document.querySelectorAll('.edit-words-text').length) {
+
                 document.querySelector('#edit_words_next_btn').classList.remove('btn-blue');
                 document.querySelector('#edit_words_next_btn').classList.add('btn-blue-disabled');
                 document.querySelector('#edit-words-btn-loading-box').style.display = 'block';
@@ -285,7 +306,7 @@ $(document).ready(function () {
                             if(result.success == true) {
                                 document.querySelector('#edit-words-btn-loading-box').style.display = 'none';
                                 load_words();
-                                display_message('변경사항을 저장했어요!.', 'green')
+                                display_message('변경사항을 저장했어요!', 'green')
 
                                 close_modal('edit-words');
                             } else {
@@ -327,19 +348,25 @@ $(document).ready(function () {
             }
         } else {
             words_text_final = [];
+            var words_create_text_length = document.querySelectorAll('.words-text').length;
 
-            for(var j = 0; j < document.querySelectorAll('#words-text').length; j++) {
-                if(document.querySelectorAll('#words-text')[j].value == '' || document.querySelectorAll('#words-text')[j].value.length > 50) document.querySelectorAll('#words-text')[j].classList.add('input-red');
-                else if(!eng.test(document.querySelectorAll('#words-text')[j].value)) {
-                    document.querySelectorAll('#words-text')[j].classList.add('input-red');
-                }
+            for(var j = 0; j < document.querySelectorAll('.words-text').length; j++) {
+                if((document.querySelectorAll('.words-text')[j].value == '' && document.querySelectorAll('.words-text').length == 1) || document.querySelectorAll('.words-text')[j].value.length > 50) document.querySelectorAll('.words-text')[j].classList.add('input-red');
+                else if(!eng.test(document.querySelectorAll('.words-text')[j].value)) {
+                    document.querySelectorAll('.words-text')[j].classList.add('input-red');
+                } 
+                else if(document.querySelectorAll('.words-text')[j].value == '') {
+                    document.querySelectorAll('.words-text')[j].classList.remove('input-red');
+                    words_create_text_length--;
+                    continue;
+                } 
                 else {
-                    document.querySelectorAll('#words-text')[j].classList.remove('input-red');
-                    words_text_final.push(document.querySelectorAll('#words-text')[j].value);
+                    document.querySelectorAll('.words-text')[j].classList.remove('input-red');
+                    words_text_final.push([ document.querySelectorAll('.words-text')[j].value, document.querySelectorAll('.words-mean')[j].value ]);
                 }
             }
 
-            if(words_text_final.length == document.querySelectorAll('#words-text').length) {
+            if(words_text_final.length == words_create_text_length) {
 
                 document.querySelector('#create_words_next_btn').classList.remove('btn-blue');
                 document.querySelector('#create_words_next_btn').classList.add('btn-blue-disabled');
@@ -417,7 +444,6 @@ $(document).ready(function () {
     $("#words-count").on("propertychange change keyup paste input", function() {
 		document.querySelector('#words-count').classList.remove('input-red');
 
-
         $('.words-text-box').empty();
 
         if(parseInt(document.querySelector('#words-count').value.replace(/[^0-9]/g, "")) > 100) document.querySelector('#words-count').value = '100';
@@ -425,7 +451,12 @@ $(document).ready(function () {
         else document.querySelector('#words-count').value = document.querySelector('#words-count').value.replace(/[^0-9]/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
         for(var i = 0; i < parseInt(document.querySelector('#words-count').value); i++) {
-            $('.words-text-box').append('<input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" id="words-text" autocomplete="off">');
+            $('.words-text-box').append('<input type="text" placeholder="영단어를 입력해주세요.(최대 50자)" maxlength="50" class="words-text" autocomplete="off">');
+            if(document.querySelector('#custom-mean-checkbox').classList.contains('checkbox-focus')) {
+                $('.words-text-box').append('<input type="text" placeholder="뜻을 입력해주세요. 원하지 않다면 비워두세요.(최대 20자)" maxlength="20" class="words-mean" autocomplete="off">');
+            } else {
+                $('.words-text-box').append('<input type="text" placeholder="뜻을 입력해주세요. 원하지 않다면 비워두세요.(최대 20자)" maxlength="20" class="words-mean" autocomplete="off" style="display: none;">');
+            }
         }
 	});
 });

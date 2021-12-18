@@ -1144,6 +1144,52 @@ td {
 
 /* basic message */
 
+.message-box2 {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 0px;
+
+    z-index: 110;
+
+    width: 450px;
+    height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+.message-content2 {
+    width: 450px;
+    height: auto;
+
+    border-radius: 7px;
+
+    padding: 10px 15px;
+    box-sizing: border-box;
+
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    
+    backdrop-filter: blur(30px);
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 20px 0 0;
+
+    /* transition: .2s;
+    transition-property: left;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55); */
+
+    position: relative;
+    left: 20px;
+    opacity: 0;
+}
+.message-content-text2 {
+    line-height: 25px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 0 0 0 7px;
+    color: white;
+}
+
 .message-box {
     position: fixed;
     right: 40px;
@@ -1168,8 +1214,9 @@ td {
 
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     display: flex;
-    
-    background-color: rgba(255, 255, 255, 0.8);
+
+    backdrop-filter: blur(30px);
+    background-color: rgba(255, 255, 255, 0.5);
     margin: 20px 0 0;
 
     /* transition: .2s;

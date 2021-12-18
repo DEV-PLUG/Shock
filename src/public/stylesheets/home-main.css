@@ -10,9 +10,3 @@ body {
 .home-title-des {
     color: white;
 }
-
-@media all and (max-width: 1150px) {
-    body {
-        background-size: 150vh;
-    }
-}

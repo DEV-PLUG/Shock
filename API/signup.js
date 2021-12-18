@@ -33,6 +33,11 @@ moment.tz.setDefault("Asia/Seoul");
 
 router.post("/", function(req, res) {
 
+    var APIusername = check_user(req.session);
+    if(APIusername == 401) { // 유저 체크
+        return res.redirect("/login"); // 로그인 페이지로 리다이렉트
+    }
+
     // 받아오는 데이터
     // user_name, user_email, user_password, user_re_password
 

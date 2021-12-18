@@ -95,28 +95,60 @@ router.put("/:id", function(req, res) {
 
                 const words_text_length = body.words_text.length;
                 for(var i = 0; i < body.words_text.length; i++) {
-                    translate_query = body.words_text[i];
+                    if(body.words_text[i][1] == '') {
+                        translate_query = body.words_text[i][0];
 
-                    options = {
-                        url: api_url,
-                        form: {'source':'en', 'target':'ko', 'text':translate_query},
-                        headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-                    };
-
-                    function translatePapago(translate_query) {
-                        return new Promise(function(resolve, reject) {
-                            request.post(options, function (error, response, body) {
-                                if (!error && response.statusCode == 200) {
-                                    resolve({body, translate_query, words_text_length});
-                                } else {
-                                    console.log('PapagoError = ' + response.statusCode);
-                                }
+                        options = {
+                            url: api_url,
+                            form: {'source':'en', 'target':'ko', 'text':translate_query},
+                            headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+                        };
+    
+                        function translatePapago(translate_query) {
+                            return new Promise(function(resolve, reject) {
+                                request.post(options, function (error, response, body) {
+                                    if (!error && response.statusCode == 200) {
+                                        resolve({body, translate_query, words_text_length});
+                                    } else {
+                                        console.log('PapagoError = ' + response.statusCode);
+                                    }
+                                });
                             });
+                        }
+                        translatePapago(translate_query).then( function(body) {
+                            final_return_words_mean_get.push([body.translate_query, JSON.parse(body.body).message.result.translatedText])
+    
+                            if(final_return_words_mean_get.length == words_text_length) {
+    
+                                wordsMeanToken = jwt.sign({ final_return_words_mean_get },
+                                    process.env.JWT_SECRET
+                                );
+    
+                                connection.query(`UPDATE words_info SET words_title = '${words_title}', words_text = '${wordsMeanToken}' WHERE words_id = '${req.params.id}'`, function (err, result) {
+    
+                                    if(result) {
+                                        // 단어장 생성 성공을 시스템 로그에 기록
+                                        connection.query(`INSERT INTO system_log(log_type, log_content, log_date, log_ip) VALUES('UPDATE Words', 'UPDATE Words Success ${req.params.id} with ${APIusername} from title: ${before_title} text: ${before_text} to title: ${body.words_title} text: ${wordsMeanToken}', '${today}', '${Ip.address()}')`, function(err, result) {
+                                            return res.status(200).json({
+                                                success: true
+                                            }); // 단어장 생성이 성공됨을 최종적으로 리턴
+                                        });
+                                    } else {
+                                        // 단어장 생성 실패시 에러 로그에 기록
+                                        connection.query(`INSERT INTO system_error_log(log_type, log_content, log_error, log_date, log_ip) VALUES('UPDATE Words', 'UPDATE Words Failed(DB Error) with ${APIusername}', "${err}", '${today}', '${Ip.address()}')`, function(err, result) {
+                                            return res.status(500).json({
+                                                success: false,
+                                                message: 'Unknown DB error'
+                                            });
+                                        });
+                                    }
+                
+                                });
+                            }
                         });
-                    }
-                    translatePapago(translate_query).then( function(body) {
-                        final_return_words_mean_get.push([body.translate_query, JSON.parse(body.body).message.result.translatedText])
-
+                    } else {
+                        final_return_words_mean_get.push([body.words_text[i][0], body.words_text[i][1]])
+    
                         if(final_return_words_mean_get.length == words_text_length) {
 
                             wordsMeanToken = jwt.sign({ final_return_words_mean_get },
@@ -144,7 +176,7 @@ router.put("/:id", function(req, res) {
             
                             });
                         }
-                    });
+                    }
                 }
     
             });
@@ -401,31 +433,68 @@ router.post("/", function(req, res) {
                 var options;
 
                 const words_text_length = body.words_text.length;
-                for(var i = 0; i < body.words_text.length; i++) {
-                    translate_query = body.words_text[i];
 
-                    options = {
-                        url: api_url,
-                        form: {'source':'en', 'target':'ko', 'text':translate_query},
-                        headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-                    };
-
-                    function translatePapago(translate_query) {
-                        return new Promise(function(resolve, reject) {
-                            request.post(options, function (error, response, body) {
-                                if (!error && response.statusCode == 200) {
-                                    resolve({body, translate_query, words_text_length});
-                                } else {
-                                    console.log('PapagoError = ' + response.statusCode);
-                                }
-                            });
+                function translatePapago(translate_query) {
+                    return new Promise(function(resolve, reject) {
+                        request.post(options, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                resolve({body, translate_query, words_text_length});
+                            } else {
+                                console.log('PapagoError = ' + response.statusCode);
+                            }
                         });
-                    }
-                    translatePapago(translate_query).then( function(body) {
-                        final_return_words_mean_get.push([body.translate_query, JSON.parse(body.body).message.result.translatedText])
+                    });
+                }
+
+                for(var i = 0; i < body.words_text.length; i++) {
+
+                    if(body.words_text[i][0] == '') continue;
+                    
+                    if(body.words_text[i][1] == '') {
+                        translate_query = body.words_text[i][0];
+
+                        options = {
+                            url: api_url,
+                            form: {'source':'en', 'target':'ko', 'text':translate_query},
+                            headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+                        };
+
+                        translatePapago(translate_query).then( function(body) {
+                            final_return_words_mean_get.push([body.translate_query, JSON.parse(body.body).message.result.translatedText])
+    
+                            if(final_return_words_mean_get.length == words_text_length) {
+    
+                                wordsMeanToken = jwt.sign({ final_return_words_mean_get },
+                                    process.env.JWT_SECRET
+                                );
+    
+                                connection.query(`INSERT INTO words_info(words_id, words_owner, words_title, words_text, createdAt, updatedAt) VALUES('${new_words_id}', '${APIusername}', '${words_title}', '${wordsMeanToken}', '${today}', '${today}')`, function (err, result) {
+    
+                                    if(result) {
+                                        // 단어장 생성 성공을 시스템 로그에 기록
+                                        connection.query(`INSERT INTO system_log(log_type, log_content, log_date, log_ip) VALUES('Add Words', 'Add Words Success ${new_words_id} with ${APIusername}', '${today}', '${Ip.address()}')`, function(err, result) {
+                                            return res.status(200).json({
+                                                success: true
+                                            }); // 단어장 생성이 성공됨을 최종적으로 리턴
+                                        });
+                                    } else {
+                                        // 단어장 생성 실패시 에러 로그에 기록
+                                        connection.query(`INSERT INTO system_error_log(log_type, log_content, log_error, log_date, log_ip) VALUES('Add Words', 'Add Words Failed(DB Error) with ${APIusername}', "${err}", '${today}', '${Ip.address()}')`, function(err, result) {
+                                            return res.status(500).json({
+                                                success: false,
+                                                message: 'Unknown DB error'
+                                            });
+                                        });
+                                    }
+                
+                                });
+                            }
+                        });
+                    } else {
+                        final_return_words_mean_get.push([body.words_text[i][0], body.words_text[i][1]]);
 
                         if(final_return_words_mean_get.length == words_text_length) {
-
+    
                             wordsMeanToken = jwt.sign({ final_return_words_mean_get },
                                 process.env.JWT_SECRET
                             );
@@ -451,7 +520,7 @@ router.post("/", function(req, res) {
             
                             });
                         }
-                    });
+                    }
                 }
 
             });

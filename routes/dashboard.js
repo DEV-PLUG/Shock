@@ -27,11 +27,11 @@ router.get('/words', function(req, res) {
 
 });
 
-router.get('/team', function(req, res) {
+router.get('/class', function(req, res) {
 
     var APIusername = check_user(req.session);
 
-    if(APIusername != 401) res.render("team.html"); // 로그인 여부 확인
+    if(APIusername != 401) res.render("class.html"); // 로그인 여부 확인
     else res.redirect("/login");
 
 });
@@ -58,7 +58,7 @@ router.get('/learn/:id', function(req, res) {
     var APIusername = check_user(req.session);
 
     if(APIusername != 401) { // 로그인 여부 확인
-        if(req.query.type == 'words') res.render("learn-words.html");
+        if(req.query.type == 'words' || req.query.type == 'words-ko' || req.query.type == 'words-en') res.render("learn-words.html");
         else res.redirect("/dashboard/learn");
     }
     else res.redirect("/login");

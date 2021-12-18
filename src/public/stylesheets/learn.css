@@ -5,6 +5,18 @@
 h3 {
     line-height: 54px;
 }
+.slice {
+    padding: 70px;
+    box-sizing: border-box;
+    width: 790px;
+}
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #333333;
+    border-bottom: 1px solid #cecece;
+    padding: 0 0 50px 0;
+}
 .words-box-wrap {
     margin: 40px 0 0;
 }

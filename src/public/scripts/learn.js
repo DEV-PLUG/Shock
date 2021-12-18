@@ -1,5 +1,6 @@
+$(".home-menu-box").load("/views/partials/dashboard-menu.html");
+
 $(document).ready(function () {
-    $(".home-menu-box").load("/views/partials/dashboard-menu.html");
 
     var select_learn_id, select_print_id;
     function load_words() {
@@ -60,18 +61,120 @@ $(document).ready(function () {
     $('#learn_words_next_btn').click(function () {
         if(document.querySelector('#select-learn-type1').classList.contains('radio-focus')) {
             location.href = `/dashboard/learn/${select_learn_id}?type=words`;
-        } else if(document.querySelector('#select-learn-type4').classList.contains('radio-focus')) {
-            location.href = `/dashboard/learn/${select_learn_id}?type=test`
+        } else if(document.querySelector('#select-learn-type2').classList.contains('radio-focus')) {
+            location.href = `/dashboard/learn/${select_learn_id}?type=words-ko`
+        } else if(document.querySelector('#select-learn-type3').classList.contains('radio-focus')) {
+            location.href = `/dashboard/learn/${select_learn_id}?type=words-en`
         }
     });
     $('#print_words_next_btn').click(function () {
+        if(document.querySelector('#print_words_next_btn').classList.contains('btn-blue-disabled')) return;
+
+        var words_type;
+
         if(document.querySelector('#select-print-type1').classList.contains('radio-focus')) {
-            location.href = `/table/${select_print_id}`;
+            words_type = 'default';
         } else if(document.querySelector('#select-print-type2').classList.contains('radio-focus')) {
-            location.href = `/table/${select_print_id}?type=ko`;
+            words_type = 'ko';
         } else if(document.querySelector('#select-print-type3').classList.contains('radio-focus')) {
-            location.href = `/table/${select_print_id}?type=en`;
+            words_type = 'en';
         }
+
+        $.ajax({
+            url: `/api/words/${select_print_id}`,
+            method: "GET",
+            success: function(result) {
+                if (result) {
+                    if(result.success == true) {
+
+                        document.querySelector('#print_words_next_btn').classList.add('btn-blue-disabled');
+                        document.querySelector('#print_words_next_btn').classList.remove('btn-blue');
+
+                        $('table').empty();
+
+                        $(".message-box2").append(`<div class="message-content2"><div class="flex-center"><div class="btn-loading-box" style="margin: 7px;"><div class="btn-loading-circle"></div></div><div class="message-content-text2">PDF 문서를 준비하고 있습니다, 잠시만 기다려 주세요.</div></div></div>`);
+                        $(document.querySelectorAll('.message-content2')[document.querySelectorAll('.message-content2').length-1]).animate({
+                            bottom: '40px',
+                            opacity: '1'
+                        }, 100);
+                        const message_content_el2 = document.querySelectorAll('.message-content2')[document.querySelectorAll('.message-content2').length-1];
+    
+                        $('table').append(`<div class="slice"><h1 class="th">-</h1></div>`);
+                        document.querySelector('h1').innerText = result.content.title;
+                        for(var k = 0; k < 18; k++) {
+                            if(result.content.words[k] == undefined) break;
+                            if(words_type == 'ko') $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td>${result.content.words[k][1]}</td></tr>`);
+                            else if(words_type == 'en') $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td>${result.content.words[k][0]}</td></tr>`);
+                            else $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td style="width: 50%;">${result.content.words[k][0]}</td><td>${result.content.words[k][1]}</td></tr>`);
+                        }
+    
+                        for(var j = 1; j < parseInt(result.content.words.length / 20) + 1; j++) {
+                            $('table').append(`<div class="slice"></div>`);
+                            for(var k = 18 + 20 * (j - 1); k < 18 + 20 * (j - 1) + 20; k++) {
+                                if(result.content.words[k] == undefined) break;
+                                if(words_type == 'ko') $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td>${result.content.words[k][1]}</td></tr>`);
+                                else if(words_type == 'en') $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td>${result.content.words[k][0]}</td></tr>`);
+                                else $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td style="width: 50%;">${result.content.words[k][0]}</td><td>${result.content.words[k][1]}</td></tr>`);
+                            }
+                        }
+
+                        close_modal('print-words');
+
+                        document.querySelector('table').style.opacity = '1';
+                        const pdf_obejct_set = document.querySelectorAll('.slice');
+                        document.querySelector('table').style.opacity = '0';
+    
+                        var doc = new jsPDF('p', 'mm', 'a4'); //jspdf객체 생성
+                        var imgData;
+                        var print_index = 1;
+                        html2canvas($(pdf_obejct_set[0])[0]).then(function(canvas) {
+                            imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
+                            doc.addImage(imgData, 'PNG', 0, 0); //이미지를 기반으로 pdf생성
+    
+                            if(pdf_obejct_set.length == 1) {
+                                doc.save(`${result.content.title} - Shock 단어장.pdf`); //pdf저장
+                                $('table').empty();
+                                document.querySelector('#print_words_next_btn').classList.remove('btn-blue-disabled');
+                                document.querySelector('#print_words_next_btn').classList.add('btn-blue');
+                                $(message_content_el2).animate({
+                                    opacity: '0'
+                                }, 100, function() {
+                                    message_content_el2.style.display = 'none';
+                                    display_message('PDF 문서 저장을 완료했습니다!', 'green');
+                                });
+                            }
+    
+                            for(var q = 1; q < pdf_obejct_set.length; q++) {
+                                html2canvas($(pdf_obejct_set[q])[0]).then(function(canvas) {
+                                    doc.addPage();
+                                    print_index++;
+                                    imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
+                                    doc.addImage(imgData, 'PNG', 0, 0); //이미지를 기반으로 pdf생성
+    
+                                    if(print_index == pdf_obejct_set.length) {
+                                        doc.save(`${result.content.title} - Shock 단어장.pdf`); //pdf저장
+                                        $('table').empty();
+                                        document.querySelector('#print_words_next_btn').classList.remove('btn-blue-disabled');
+                                        document.querySelector('#print_words_next_btn').classList.add('btn-blue');
+                                        $(message_content_el2).animate({
+                                            opacity: '0'
+                                        }, 100, function() {
+                                            message_content_el2.style.display = 'none';
+                                            display_message('PDF 문서 저장을 완료했습니다!', 'green');
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    display_message('알 수 없는 오류가 발생했습니다.(1)', 'red');
+                }
+            },
+            error: function(request, status, error) {
+                display_message('알 수 없는 오류가 발생했습니다.(2)', 'red');
+            }
+        });
     });
 
 });

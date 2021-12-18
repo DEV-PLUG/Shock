@@ -1,6 +1,7 @@
 $(document).ready(function () {
     document.querySelector('.box').style.display = 'none';
     document.querySelector('#add-words .btn-loading-box').style.display = 'none';
+    document.querySelector('.contains').style.display = 'none';
     const words_id = location.href.split('/')[6].split('?')[0]
 
     $.ajax({
@@ -13,8 +14,17 @@ $(document).ready(function () {
 
                     document.querySelector('.title').innerText = word_content.title;
                     document.querySelector('.des').innerText = `${word_content.words.length}개의 단어\n작성자: ${word_content.owner}`;
-                    for(var j = 0; j < result.content.words.length; j++) {
-                        $('.words-box').append(`<div class="words-box-box"><div class="words-title">${word_content.words[j][0]}</div><div class="words-mean">${word_content.words[j][1]}</div></div>`);
+                    if(result.content.words.length < 10) {
+                        document.querySelector('.contains').style.display = 'none';
+                        for(var j = 0; j < result.content.words.length; j++) {
+                            $('.words-box').append(`<div class="words-box-box"><div class="words-title">${word_content.words[j][0]}</div><div class="words-mean">${word_content.words[j][1]}</div></div>`);
+                        }
+                    } else {
+                        document.querySelector('.contains').innerText = `외 ${result.content.words.length - 10}개의 단어가 포함됨.`
+                        document.querySelector('.contains').style.display = 'block';
+                        for(var j = 0; j < 10; j++) {
+                            $('.words-box').append(`<div class="words-box-box"><div class="words-title">${word_content.words[j][0]}</div><div class="words-mean">${word_content.words[j][1]}</div></div>`);
+                        }
                     }
                 }
             } else {
