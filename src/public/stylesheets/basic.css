@@ -1171,6 +1171,7 @@ td {
     display: flex;
     
     backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     background-color: rgba(0, 0, 0, 0.5);
     margin: 20px 0 0;
 
@@ -1216,6 +1217,7 @@ td {
     display: flex;
 
     backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     background-color: rgba(255, 255, 255, 0.5);
     margin: 20px 0 0;
 
