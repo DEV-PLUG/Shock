@@ -1,6 +1,7 @@
 # Shock - 내가 골라 외우는 영단어
 
-[![CodeFactor](https://www.codefactor.io/repository/github/dev-plug/shock/badge)](https://www.codefactor.io/repository/github/dev-plug/shock)
+[![Patreon](https://img.shields.io/badge/Sponsor-Patreon-critical)](https://www.patreon.com/bePatron?u=64697816)
+<img src="https://img.shields.io/badge/Language-Node.js-green" />
 
 ## ❓ Shock 서비스가 뭐에요?   
 - **Shock**는 **<u>내가 직접 고른 영단어를 쉽게 외울 수 있게</u>** 하기 위해 만들었습니다.  
