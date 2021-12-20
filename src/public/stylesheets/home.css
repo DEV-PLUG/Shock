@@ -70,5 +70,9 @@ body {
 }
 
 @media all and (max-width: 1150px) {
-
+    .home-title-Sellation-signup-btn {
+        height: 50px;
+        font-size: 1rem;
+        line-height: 50px;
+    }
 }

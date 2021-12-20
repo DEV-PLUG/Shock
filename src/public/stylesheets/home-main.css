@@ -10,3 +10,19 @@ body {
 .home-title-des {
     color: white;
 }
+
+@media all and (max-width: 1150px) {
+    body {
+        background-size: 150vh;
+    }
+    .home-title-box {
+        width: 100%;
+    }
+    .home-title {
+        font-size: 2.5rem;
+        line-height: 3rem;
+    }
+    .home-title-des {
+        font-size: 1rem;
+    }
+}

@@ -73,6 +73,7 @@ function display_message(message, color) {
             opacity: '0'
         }, 100, function() {
             message_content_el.style.display = 'none';
+            $(message_content_el).remove();
         });
     }, 5000);
 }
