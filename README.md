@@ -16,7 +16,7 @@
 
 ## 🎫 서비스에 관심이 있으신가요?
 현재 Shock 서비스는 지출 문제로 호스팅을 중단한 상태에요..<br>
-Shock 서비스에 관심이 있으시다면 [이곳](https://example.com)에서 서비스 소개서를 읽어주세요.<br>
+Shock 서비스에 관심이 있으시다면 [이곳](https://github.com/DEV-PLUG/Shock/blob/main/Shock-Service.pdf)에서 서비스 소개서를 읽어주세요.<br>
 관련해서 [후원](https://www.patreon.com/bePatron?u=64697816)이나 외주를 맡기시려면 언제든 제게 연락 주세요!
 
 ## 📑감사
