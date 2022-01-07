@@ -20,7 +20,7 @@ $(document).ready(function () {
             display_message('클립보드 복사를 지원하지 않는 브라우저인 것 같아요! 대신 새창으로 링크를 열어드렸어요!', 'yellow');
             var win = window.open(`https://shock-english.ml`, '_blank');
             win.focus();
-        })
+        });
     });
 
 });

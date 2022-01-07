@@ -14,11 +14,19 @@
 
     <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js?ver=1.4.2'></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWDY51DRVB"></script>
 
     <script src="/public/scripts/basic.js"></script>
     <script src="/public/scripts/words.js" defer></script>
 
     <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
+
+    <meta name="twitter:url" content="http://shock-english.ml" />
+    <meta name="twitter:type" content="website" />
+    <meta name="twitter:title" content="Shock - 내가 골라 외우는 영단어" />
+    <meta name="twitter:description" content="소개합니다. 여러분의 영단어 외우기를 바꿀 Shock." />
+    <meta name="twitter:image" content="http://shock-english.ml/resources/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <title>Shock | 단어장</title>
 </head>
@@ -26,7 +34,7 @@
 
     <div class="modal-background">
         <div class="modal-box" id="edit-words-modal">
-            <div class="flex-between">
+            <div class="flex-between modal-title-box">
                 <div class="modal-title">단어장 편집하기</div>
                 <div id="edit-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
             </div>
@@ -59,7 +67,7 @@
         </div>
 
         <div class="modal-box" id="delete-words-modal">
-            <div class="flex-between">
+            <div class="flex-between modal-title-box">
                 <div class="modal-title">단어장 삭제하기</div>
                 <div id="delete-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
             </div>
@@ -79,7 +87,7 @@
         </div>
 
         <div class="modal-box" id="create-words-modal">
-            <div class="flex-between">
+            <div class="flex-between modal-title-box">
                 <div class="modal-title">단어장 추가하기</div>
                 <div id="create-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
             </div>
@@ -93,6 +101,17 @@
                         <div class="input_labels_box flex-between">
                             <div class="input_label">단어장 이름을 입력해주세요.</div>
                             <div class="input_text_num_label">최대 20자</div>
+                        </div>
+                    </div>
+                    <div class="input_box">
+                        <div class="input_title">속한 클래스</div>
+                    </div>
+                    <div class="select">
+                        <div class="flex-between select-box words-class-select" id="words-class-select" onclick="select('words-class')">
+                            <div class="selected-option words-class-selected-option" id="words-class-selected-option">개인 단어장 보관함</div>
+                            <div class="select-arrow words-class-select-arrow" id="words-class-select-arrow"></div>
+                        </div>
+                        <div class="option-box words-class-option-box" id="words-class-option-box">
                         </div>
                     </div>
                     <div class="input_box">
@@ -129,6 +148,7 @@
                     <video width="80" id="add-words-check">
                         <source id="add-words-check-source" type="video/mp4" src="/resources/check.mp4"/>
                     </video>
+                    <div class="add-words-check-img"></div>
                     <div class="add-words-check-title">단어장 생성 완료</div>
                     <div class="add-words-check-des">단어장 생성을 완료했어요!</div>
                 </div>
@@ -146,13 +166,13 @@
     <div class="home-menu-box"></div>
 
     <div class="words-box">
-        <div class="flex-between">
+        <div class="flex-between" style="flex-wrap: wrap;">
             <h3>단어장 관리</h3>
             <div class="btn-blue add-words-btn"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
         </div>
 
         <div class="btn-loading-box2" id="words-load-loading-box"><div class="btn-loading-circle2"></div></div>
-        <div class="no-words">
+        <div class="no-words" style="display: none;">
             이런이런..! 아무런 단어장이 없어요!<br><br>
             <div class="btn-blue add-words-btn2"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
         </div>
@@ -161,5 +181,6 @@
     </div>
 
     <div class="message-box"></div>
+    <div class="message-box2"></div>
 </body>
 </html>

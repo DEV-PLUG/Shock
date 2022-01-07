@@ -75,4 +75,19 @@ body {
         font-size: 1rem;
         line-height: 50px;
     }
+    @media all and (max-width: 1150px) {
+        body {
+            background-size: 150vh;
+        }
+        .home-title-box {
+            width: 100%;
+        }
+        .home-title {
+            font-size: 3rem;
+        }
+        .home-title-des {
+            font-size: 1rem;
+            margin: 30px 0;
+        }
+    }
 }

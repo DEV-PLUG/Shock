@@ -17,18 +17,91 @@
 
     <script src="/public/scripts/basic.js"></script>
     <script src="/public/scripts/class.js" defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWDY51DRVB"></script>
+
+    <meta name="twitter:url" content="http://shock-english.ml" />
+    <meta name="twitter:type" content="website" />
+    <meta name="twitter:title" content="Shock - 내가 골라 외우는 영단어" />
+    <meta name="twitter:description" content="소개합니다. 여러분의 영단어 외우기를 바꿀 Shock." />
+    <meta name="twitter:image" content="http://shock-english.ml/resources/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
 
     <title>Shock | 클래스</title>
 </head>
 <body>
+    
+    <div class="modal-background">
+        <div class="modal-box" id="create-class-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">클래스 추가하기</div>
+                <div id="create-class_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="modal-create-class-content1">
+                    <div class="input_box">
+                        <div class="input_title">클래스 이름</div>
+                        <input type="text" placeholder="클래스 이름을 입력해주세요." maxlength="20" id="class-title" autocomplete="off">
+                        <div class="input_labels_box flex-between">
+                            <div class="input_label">클래스 이름을 입력해주세요.</div>
+                            <div class="input_text_num_label">최대 20자</div>
+                        </div>
+                    </div>
+                    <div class="input_box">
+                        <div class="input_title">클래스 설명</div>
+                        <textarea type="text" placeholder="클래스 설명을 입력해주세요." maxlength="50" id="class-des" autocomplete="off"></textarea>
+                        <div class="input_labels_box flex-between">
+                            <div class="input_label">클래스 설명을 입력해주세요.</div>
+                            <div class="input_text_num_label">최대 50자</div>
+                        </div>
+                    </div>
+                    <div class="flex words-count-info">
+                        <div class="btn-icon material-icons">info</div>
+                        클래스는 한 유저당 최대 3개, 학생은 최대 5명까지 초대가<br> 가능하고, 단어장은 최대 20개까지만 생성 가능해요.
+                    </div>
+                    <div class="flex words-count-info">
+                        <div class="btn-icon material-icons">info</div>
+                        학생은 단어장을 보고 학습할 수만 있어요.<br>같은 선생님 권한으로 유저를 초대할 수는 없습니다.
+                    </div>
+                </div>
+                <div class="modal-create-class-content2">
+                    <video width="80" id="create-class-check">
+                        <source id="create-class-check-source" type="video/mp4" src="/resources/check.mp4"/>
+                    </video>
+                    <div class="create-class-check-img"></div>
+                    <div class="create-class-check-title">클래스 생성 완료</div>
+                    <div class="create-class-check-des">클래스 생성을 완료했어요!</div>
+                </div>
+            </div>
+
+            <div class="modal-end create-class-modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="create_class_next_btn"><div class="btn-loading-box" id="add-class-btn-loading-box"><div class="btn-loading-circle"></div></div>추가하기</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="home-menu-box"></div>
 
-    <div class="box">
-        <div class="title">앗..</div>
-        <div class="des">추후 출시될 기능이에요!<br>조금만 기다리면 팀을 생성하고 멤버를 초대해,<br> 팀 전용 단어장 보관함에 단어장을 추가하고<br> 자동적으로 공유하고 편집할 수 있어요!</div>
+    <div class="class-box">
+        <div class="flex-between" style="flex-wrap: wrap;">
+            <h3>클래스</h3>
+            <div class="btn-blue add-class-btn"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
+        </div>
+
+        <div class="btn-loading-box2" id="class-load-loading-box"><div class="btn-loading-circle2"></div></div>
+        <div class="no-class" style="display: none;">
+            앗.. 이런! 클래스가 없어요!<br><br>
+            <div class="btn-blue add-class-btn2"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
+        </div>
+
+        <div class="class-box-wrap">
+        </div>
     </div>
 
     <div class="message-box"></div>

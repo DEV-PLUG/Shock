@@ -1,0 +1,41 @@
+.box_ {
+    width: 600px;
+    height: auto;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.title {
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 0 20px;
+    color: #333333;
+}
+.des {
+    font-size: 1.2rem;
+    color: #666666;
+    margin: 0 0 20px;
+    text-align: center;
+}
+.email-icon {
+    margin: 0 auto 30px;
+}
+
+@media all and (max-width: 1000px) {
+    .box_ {
+        width: 90%;
+    }
+    .title {
+        font-size: 1.8rem;
+    }
+    .des {
+        font-size: 1rem;
+    }
+}

@@ -1,11 +1,20 @@
+// location.href = '/service';
+
 $(".home-menu-box").load("/views/partials/menu.html");
 
 $(document).ready(function () {
 
-    // 모바일 기기 인식
-    if(navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)){
-        location.href = '/mobile'
-    }
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    gtag('js', new Date());
+
+    gtag('config', 'G-SWDY51DRVB');
+
+    // // 모바일 기기 인식
+    // if(navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)){
+    //     location.href = '/mobile'
+    // }
 
     document.querySelector('.btn-loading-box').style.display = 'none';
 
@@ -100,6 +109,7 @@ $(document).ready(function () {
                     }),       
                     success: function(result) {
                         if (result) {
+                            console.log(result.success)
                             if(result.success == true) location.href = '/signup/success';
                             else display_message('알 수 없는 오류가 발생했습니다.(3)', 'red');
                         } else {
@@ -130,6 +140,10 @@ $(document).ready(function () {
                         else if(request.responseJSON.message == 'The id already exist') {
                             document.querySelector('#user_name').classList.add('input-red');
                             display_message('누군가 사용하고 있는 아이디입니다.', 'yellow');
+                        }
+                        else if(request.responseJSON.message == 'The id cannot only number and 18 length') {
+                            document.querySelector('#user_name').classList.add('input-red');
+                            display_message('아이디는 숫자로만 구성된 18자리일 수 없습니다.', 'yellow');
                         }
                         else if(request.responseJSON.message == 'There is a blank in the id') {
                             document.querySelector('#user_name').classList.add('input-red');

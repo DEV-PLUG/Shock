@@ -37,3 +37,16 @@ a:hover {
 .document-agreement-box {
     margin: 20px 0 0;
 }
+
+@media all and (max-width: 500px) {
+    .login-box {
+        width: 90%;
+        margin: 120px auto;
+    }
+    #signup-signup-btn {
+        width: 100% !important;
+    }
+    h6 {
+        margin: 20px 0 0;
+    }
+}

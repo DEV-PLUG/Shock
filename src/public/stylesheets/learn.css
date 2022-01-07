@@ -22,7 +22,7 @@ h1 {
 }
 .words-box-content {
     width: auto;
-    height: 70px;
+    height: auto;
 
     border-radius: 10px;
 
@@ -114,4 +114,37 @@ h1 {
 }
 #print-words-modal .modal-content .flex {
     margin: 0 0 5px;
+}
+
+.words_wrap_title {
+    margin: 30px 0 20px;
+    color: #333333;
+    font-size: 17px;
+}
+.add-words-btn2 {
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+@media all and (max-width: 1000px) {
+    .words-box {
+        width: 90%;
+        margin: 100px auto;
+    }
+    
+    .words-box-content .flex-between {
+        display: block;
+    }
+    .words-box-content .flex-between .flex:nth-child(2) {
+        margin: 5px 0 0 0;
+    }
+}
+@media all and (max-width: 500px) {
+    .no-words {
+        width: 100%;
+        font-size: 1rem;
+    }
+    h3 {
+        line-height: 54px;
+    }
 }

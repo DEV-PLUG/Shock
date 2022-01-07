@@ -2,6 +2,13 @@ $(".home-menu-box").load("/views/partials/dashboard-menu.html");
 
 $(document).ready(function () {
 
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    gtag('js', new Date());
+
+    gtag('config', 'G-SWDY51DRVB');
+
     var select_learn_id, select_print_id;
     function load_words() {
         document.querySelector('#words-load-loading-box').style.display = 'block';
@@ -17,12 +24,35 @@ $(document).ready(function () {
                         document.querySelector('#words-load-loading-box').style.display = 'none';
                         $('.words-box-wrap').empty();
 
-                        if(result.content == null) {
-                            document.querySelector('.no-words').style.display = 'block';
-                        } else {
-                            for(var j = 0; j < result.content.length; j++) {
-                                $('.words-box-wrap').append(`<div class="words-box-content"><div class="flex-between"><div class="flex"><div class="words-box-content-title">${result.content[j].title}</div><div class="words-box-content-des">${result.content[j].words.length}개의 단어</div></div><div class="flex"><div class="words-box-content-btn2" id="${result.content[j].id}">출력하기</div><div class="words-box-content-btn" id="${result.content[j].id}">학습하기</div></div></div></div>`);
+                        if(result.content.personal != null && result.content.personal.length > 0) {
+                            $('.words-box-wrap').append('<div class="words_wrap_title">개인 단어장</div>');
+                            for(var j = 0; j < result.content.personal.length; j++) {
+                                $('.words-box-wrap').append(`<div class="words-box-content"><div class="flex-between"><div class="flex"><div class="words-box-content-title">${result.content.personal[j].title}</div><div class="words-box-content-des">${result.content.personal[j].words.length}개의 단어</div></div><div class="flex"><div class="words-box-content-btn2" id="${result.content.personal[j].id}">출력하기</div><div class="words-box-content-btn" id="${result.content.personal[j].id}">학습하기</div></div></div></div>`);
                             }
+                        }
+                        if(result.content.owner != null && result.content.owner.length > 0) {
+                            for(var j = 0; j < result.content.owner.length; j++) {
+                                if(result.content.owner[j].words.length > 0) {
+                                    $('.words-box-wrap').append(`<div class="words_wrap_title">소유한 클래스 - ${result.content.owner[j].name}</div>`);
+                                    for(var i = 0; i < result.content.owner[j].words.length; i++) {
+                                        $('.words-box-wrap').append(`<div class="words-box-content"><div class="flex-between"><div class="flex"><div class="words-box-content-title">${result.content.owner[j].words[i].title}</div><div class="words-box-content-des">${result.content.owner[j].words[i].words.length}개의 단어</div></div><div class="flex"><div class="words-box-content-btn2" id="${result.content.owner[j].words[i].id}">출력하기</div><div class="words-box-content-btn" id="${result.content.owner[j].words[i].id}">학습하기</div></div></div></div>`);
+                                    }
+                                }
+                            }
+                        }
+                        if(result.content.user != null && result.content.user.length > 0) {
+                            for(var j = 0; j < result.content.user.length; j++) {
+                                if(result.content.user[j].words.length > 0) {
+                                    $('.words-box-wrap').append(`<div class="words_wrap_title">참여한 클래스 - ${result.content.user[j].name}</div>`);
+                                    for(var i = 0; i < result.content.user[j].words.length; i++) {
+                                        $('.words-box-wrap').append(`<div class="words-box-content"><div class="flex-between"><div class="flex"><div class="words-box-content-title">${result.content.user[j].words[i].title}</div><div class="words-box-content-des">${result.content.user[j].words[i].words.length}개의 단어</div></div><div class="flex"><div class="words-box-content-btn" id="${result.content.user[j].words[i].id}">학습하기</div></div></div></div>`);
+                                    }
+                                }
+                            }
+                        }
+
+                        if(document.querySelectorAll('.words-box-content').length <= 0) {
+                            document.querySelector('.no-words').style.display = 'block';
                         }
 
                         $(document.querySelectorAll('.words-box-content-btn')).click(function () {
@@ -105,7 +135,7 @@ $(document).ready(function () {
                             if(result.content.words[k] == undefined) break;
                             if(words_type == 'ko') $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td>${result.content.words[k][1]}</td></tr>`);
                             else if(words_type == 'en') $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td>${result.content.words[k][0]}</td></tr>`);
-                            else $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td style="width: 50%;">${result.content.words[k][0]}</td><td>${result.content.words[k][1]}</td></tr>`);
+                            else $(document.querySelectorAll('.slice')[0]).append(`<tr class="th"><td style="width: 40%;">${result.content.words[k][0]}</td><td>${result.content.words[k][1]}</td></tr>`);
                         }
     
                         for(var j = 1; j < parseInt(result.content.words.length / 20) + 1; j++) {
@@ -114,11 +144,25 @@ $(document).ready(function () {
                                 if(result.content.words[k] == undefined) break;
                                 if(words_type == 'ko') $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td>${result.content.words[k][1]}</td></tr>`);
                                 else if(words_type == 'en') $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td>${result.content.words[k][0]}</td></tr>`);
-                                else $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td style="width: 50%;">${result.content.words[k][0]}</td><td>${result.content.words[k][1]}</td></tr>`);
+                                else $(document.querySelectorAll('.slice')[j]).append(`<tr class="th"><td style="width: 40%;">${result.content.words[k][0]}</td><td>${result.content.words[k][1]}</td></tr>`);
                             }
                         }
 
                         close_modal('print-words');
+
+                        // 모바일 기기 인식
+                        if(navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)){
+                            $('table').empty();
+                            document.querySelector('#print_words_next_btn').classList.remove('btn-blue-disabled');
+                            document.querySelector('#print_words_next_btn').classList.add('btn-blue');
+                            $(message_content_el2).animate({
+                                opacity: '0'
+                            }, 100, function() {
+                                $(message_content_el2).remove();
+                                display_message('죄송합니다. 해당 기기에서는 PDF 저장을 지원하지 않습니다.', 'red');
+                            });
+                            return;
+                        }
 
                         document.querySelector('table').style.opacity = '1';
                         const pdf_obejct_set = document.querySelectorAll('.slice');
@@ -139,7 +183,7 @@ $(document).ready(function () {
                                 $(message_content_el2).animate({
                                     opacity: '0'
                                 }, 100, function() {
-                                    message_content_el2.style.display = 'none';
+                                    $(message_content_el2).remove();
                                     display_message('PDF 문서 저장을 완료했습니다!', 'green');
                                 });
                             }
@@ -159,7 +203,7 @@ $(document).ready(function () {
                                         $(message_content_el2).animate({
                                             opacity: '0'
                                         }, 100, function() {
-                                            message_content_el2.style.display = 'none';
+                                            $(message_content_el2).remove();
                                             display_message('PDF 문서 저장을 완료했습니다!', 'green');
                                         });
                                     }

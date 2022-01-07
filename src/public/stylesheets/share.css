@@ -5,6 +5,7 @@
 .title {
     font-size: 60px;
     font-weight: bold;
+    color: #333333;
 }
 .des {
     margin: 20px 0;
@@ -30,6 +31,7 @@
 .words-title {
     font-size: 30px;
     font-weight: bold;
+    color: #333333;
 }
 .words-mean {
     color: #666666;
@@ -37,10 +39,29 @@
 }
 #add-words {
     width: 500px;
-    margin: 50px 0 0;
+    margin: 50px 0 13px;
     text-align: center;
 }
 .contains {
     text-align: center;
     color: #666666;
+}
+h4 {
+    word-break: keep-all;
+}
+
+@media all and (max-width: 1000px) {
+    .box_ {
+        margin: 50px auto;
+        width: 80%;
+    }
+    .words-box {
+        width: 100%;
+    }
+    #add-words {
+        width: 100%;
+    }
+    .contains {
+        font-size: 0.9rem;
+    }
 }

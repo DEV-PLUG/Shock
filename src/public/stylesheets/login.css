@@ -34,3 +34,44 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.redirect-info-box {
+    width: 450px;
+    height: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #ECECEC;
+
+    margin: 0 0 20px;
+    border-radius: 10px;
+
+    font-size: 16px;
+    color: #666666;
+
+    word-break: keep-all;
+
+    display: none;
+}
+.redirect-info-box .material-icons {
+    color: #666666;
+    margin: 0 5px 0 0;
+}
+
+@media all and (max-width: 500px) {
+    .redirect-info-box .material-icons {
+        font-size: 20px;
+    }
+    .redirect-info-box {
+        width: 100%;
+        font-size: 14px;
+    }
+    .login-box {
+        width: 90%;
+    }
+    #login-login-btn {
+        width: 100% !important;
+    }
+    h6 {
+        margin: 20px 0 0;
+    }
+}

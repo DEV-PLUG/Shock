@@ -47,3 +47,22 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+@media all and (max-width: 1000px) {
+    .words-box-wrap {
+        width: 90%;
+    }
+    .words-box {
+        width: 100%;
+        height: 40vh;
+    }
+    .words-count {
+        font-size: 14px;
+    }
+    .words-word {
+        font-size: 2.5rem;
+        margin: 0 0 10px;
+    }
+    .words-mean {
+        font-size: 1.5rem;
+    }
+}

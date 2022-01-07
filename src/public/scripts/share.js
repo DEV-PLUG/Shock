@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    gtag('js', new Date());
+
+    gtag('config', 'G-SWDY51DRVB');
+
     document.querySelector('.box').style.display = 'none';
     document.querySelector('#add-words .btn-loading-box').style.display = 'none';
     document.querySelector('.contains').style.display = 'none';
@@ -13,7 +20,9 @@ $(document).ready(function () {
                     word_content = result.content;
 
                     document.querySelector('.title').innerText = word_content.title;
-                    document.querySelector('.des').innerText = `${word_content.words.length}개의 단어\n작성자: ${word_content.owner}`;
+                    if(word_content.owner_type == 'user') document.querySelector('.des').innerText = `${word_content.words.length}개의 단어\n작성자: ${word_content.owner}`;
+                    else document.querySelector('.des').innerText = `${word_content.words.length}개의 단어\n작성자: ${word_content.owner} (클래스)`;
+
                     if(result.content.words.length < 10) {
                         document.querySelector('.contains').style.display = 'none';
                         for(var j = 0; j < result.content.words.length; j++) {
@@ -32,7 +41,14 @@ $(document).ready(function () {
             }
         },
         error: function(request, status, error) {
-            display_message('알 수 없는 오류가 발생했습니다.(2)', 'red');
+            if(request.responseJSON.message == 'The words does not exist') {
+                document.querySelector('#add-words').classList.add('btn-blue-disabled');
+                document.querySelector('#add-words').classList.remove('btn-blue');
+                document.querySelector('.title').innerText = '죄송합니다.';
+                document.querySelector('.words-box').style.display = 'none';
+                document.querySelector('.des').innerText = `해당 단어장을 찾을 수 없습니다.\nURL을 다시 한번 확인해주세요.`;
+            }
+            else display_message('알 수 없는 오류가 발생했습니다.(2)', 'red');
         }
     });
 

@@ -58,6 +58,13 @@ router.put("/:id", function(req, res) {
             });
         }
 
+        if(body.words_text.length > 100) {
+            return res.status(400).json({
+                success: false,
+                message: 'Words are too many'
+            });
+        }
+
         getConnection((connection) => {
 
             connection.query(`SELECT words_title, words_text, words_owner FROM words_info WHERE words_id = '${req.params.id}'`, function (err, result) {
@@ -68,56 +75,101 @@ router.put("/:id", function(req, res) {
                         message: 'The words id does not exist'
                     });
                 }
-    
+
                 if(result[0].words_owner != APIusername) {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'You are not owner of this words'
+                    const now_check_words_owner = result[0].words_owner;
+                    connection.query(`SELECT class_name, class_id FROM class_info WHERE class_owner = '${APIusername}'`, function (err, result) {
+                        for(var i = 0; i < result.length; i++) {
+                            if(now_check_words_owner == result[i].class_id) break;
+                        }
+    
+                        if(i == result.length) {
+                            return res.status(400).json({
+                                success: false,
+                                message: 'You are not owner of this words'
+                            });
+                        } else {
+                            edit_words_detail();
+                        }
                     });
+                } else {
+                    edit_words_detail();
                 }
 
-                const words_title = body.words_title;
+                function edit_words_detail() {
+                    const words_title = body.words_title;
 
-                // API 키 선언
-                const client_id = process.env.PAPAGO_CLIENT_ID;
-                const client_secret = process.env.PAPAGO_CLIENT_SECRET;
-
-                const before_title = body.words_title;
-                const before_text = body.words_text;
-
-                var final_return_words_mean_get = []; // 리턴 변수 선언
-
-                // API 정보 선언
-                var translate_query;
-                var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
-                var request = require('request');
-                var options;
-
-                const words_text_length = body.words_text.length;
-                for(var i = 0; i < body.words_text.length; i++) {
-                    if(body.words_text[i][1] == '') {
-                        translate_query = body.words_text[i][0];
-
-                        options = {
-                            url: api_url,
-                            form: {'source':'en', 'target':'ko', 'text':translate_query},
-                            headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-                        };
+                    // API 키 선언
+                    const client_id = process.env.PAPAGO_CLIENT_ID;
+                    const client_secret = process.env.PAPAGO_CLIENT_SECRET;
     
-                        function translatePapago(translate_query) {
-                            return new Promise(function(resolve, reject) {
-                                request.post(options, function (error, response, body) {
-                                    if (!error && response.statusCode == 200) {
-                                        resolve({body, translate_query, words_text_length});
-                                    } else {
-                                        console.log('PapagoError = ' + response.statusCode);
-                                    }
+                    const before_title = body.words_title;
+                    const before_text = body.words_text;
+    
+                    var final_return_words_mean_get = []; // 리턴 변수 선언
+    
+                    // API 정보 선언
+                    var translate_query;
+                    var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
+                    var request = require('request');
+                    var options;
+    
+                    const words_text_length = body.words_text.length;
+                    for(var i = 0; i < body.words_text.length; i++) {
+                        if(body.words_text[i][1] == '') {
+                            translate_query = body.words_text[i][0];
+    
+                            options = {
+                                url: api_url,
+                                form: {'source':'en', 'target':'ko', 'text':translate_query},
+                                headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+                            };
+        
+                            function translatePapago(translate_query) {
+                                return new Promise(function(resolve, reject) {
+                                    request.post(options, function (error, response, body) {
+                                        if (!error && response.statusCode == 200) {
+                                            resolve({body, translate_query, words_text_length});
+                                        } else {
+                                            console.log('PapagoError = ' + response.statusCode);
+                                        }
+                                    });
                                 });
+                            }
+                            translatePapago(translate_query).then( function(body) {
+                                final_return_words_mean_get.push([body.translate_query, JSON.parse(body.body).message.result.translatedText])
+        
+                                if(final_return_words_mean_get.length == words_text_length) {
+        
+                                    wordsMeanToken = jwt.sign({ final_return_words_mean_get },
+                                        process.env.JWT_SECRET
+                                    );
+        
+                                    connection.query(`UPDATE words_info SET words_title = '${words_title}', words_text = '${wordsMeanToken}' WHERE words_id = '${req.params.id}'`, function (err, result) {
+        
+                                        if(result) {
+                                            // 단어장 생성 성공을 시스템 로그에 기록
+                                            connection.query(`INSERT INTO system_log(log_type, log_content, log_date, log_ip) VALUES('UPDATE Words', 'UPDATE Words Success ${req.params.id} with ${APIusername} from title: ${before_title} text: ${before_text} to title: ${body.words_title} text: ${wordsMeanToken}', '${today}', '${Ip.address()}')`, function(err, result) {
+                                                return res.status(200).json({
+                                                    success: true
+                                                }); // 단어장 생성이 성공됨을 최종적으로 리턴
+                                            });
+                                        } else {
+                                            // 단어장 생성 실패시 에러 로그에 기록
+                                            connection.query(`INSERT INTO system_error_log(log_type, log_content, log_error, log_date, log_ip) VALUES('UPDATE Words', 'UPDATE Words Failed(DB Error) with ${APIusername}', "${err}", '${today}', '${Ip.address()}')`, function(err, result) {
+                                                return res.status(500).json({
+                                                    success: false,
+                                                    message: 'Unknown DB error'
+                                                });
+                                            });
+                                        }
+                    
+                                    });
+                                }
                             });
-                        }
-                        translatePapago(translate_query).then( function(body) {
-                            final_return_words_mean_get.push([body.translate_query, JSON.parse(body.body).message.result.translatedText])
-    
+                        } else {
+                            final_return_words_mean_get.push([body.words_text[i][0], body.words_text[i][1]])
+        
                             if(final_return_words_mean_get.length == words_text_length) {
     
                                 wordsMeanToken = jwt.sign({ final_return_words_mean_get },
@@ -145,36 +197,6 @@ router.put("/:id", function(req, res) {
                 
                                 });
                             }
-                        });
-                    } else {
-                        final_return_words_mean_get.push([body.words_text[i][0], body.words_text[i][1]])
-    
-                        if(final_return_words_mean_get.length == words_text_length) {
-
-                            wordsMeanToken = jwt.sign({ final_return_words_mean_get },
-                                process.env.JWT_SECRET
-                            );
-
-                            connection.query(`UPDATE words_info SET words_title = '${words_title}', words_text = '${wordsMeanToken}' WHERE words_id = '${req.params.id}'`, function (err, result) {
-
-                                if(result) {
-                                    // 단어장 생성 성공을 시스템 로그에 기록
-                                    connection.query(`INSERT INTO system_log(log_type, log_content, log_date, log_ip) VALUES('UPDATE Words', 'UPDATE Words Success ${req.params.id} with ${APIusername} from title: ${before_title} text: ${before_text} to title: ${body.words_title} text: ${wordsMeanToken}', '${today}', '${Ip.address()}')`, function(err, result) {
-                                        return res.status(200).json({
-                                            success: true
-                                        }); // 단어장 생성이 성공됨을 최종적으로 리턴
-                                    });
-                                } else {
-                                    // 단어장 생성 실패시 에러 로그에 기록
-                                    connection.query(`INSERT INTO system_error_log(log_type, log_content, log_error, log_date, log_ip) VALUES('UPDATE Words', 'UPDATE Words Failed(DB Error) with ${APIusername}', "${err}", '${today}', '${Ip.address()}')`, function(err, result) {
-                                        return res.status(500).json({
-                                            success: false,
-                                            message: 'Unknown DB error'
-                                        });
-                                    });
-                                }
-            
-                            });
                         }
                     }
                 }
@@ -228,33 +250,49 @@ router.delete("/:id", function(req, res) {
                     });
                 }
     
+                
                 if(result[0].words_owner != APIusername) {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'You are not owner of this words'
+                    const now_check_words_owner = result[0].words_owner;
+                    connection.query(`SELECT class_name, class_id FROM class_info WHERE class_owner = '${APIusername}'`, function (err, result) {
+                        for(var i = 0; i < result.length; i++) {
+                            if(now_check_words_owner == result[i].class_id) break;
+                        }
+    
+                        if(i == result.length) {
+                            return res.status(400).json({
+                                success: false,
+                                message: 'You are not owner of this words'
+                            });
+                        } else {
+                            delete_words();
+                        }
                     });
+                } else {
+                    delete_words();
                 }
     
-                connection.query(`DELETE FROM words_info WHERE words_id = '${req.params.id}'`, function (err, result) {
+                function delete_words() {
+                    connection.query(`DELETE FROM words_info WHERE words_id = '${req.params.id}'`, function (err, result) {
     
-                    if(result) {
-                        // 단어장 삭제 성공을 시스템 로그에 기록
-                        connection.query(`INSERT INTO system_log(log_type, log_content, log_date, log_ip) VALUES('Delete Words', 'Delete Words Success ${req.params.id} with ${APIusername}', '${today}', '${Ip.address()}')`, function(err, result) {
-                            return res.status(200).json({
-                                success: true
-                            }); // 단어장 삭제가 성공됨을 최종적으로 리턴
-                        });
-                    } else {
-                        // 단어장 삭제 실패시 에러 로그에 기록
-                        connection.query(`INSERT INTO system_error_log(log_type, log_content, log_error, log_date, log_ip) VALUES('Delete Words', 'Delete Words Failed(DB Error) ${req.params.id} with ${APIusername}', "${err}", '${today}', '${Ip.address()}')`, function(err, result) {
-                            return res.status(500).json({
-                                success: false,
-                                message: 'Unknown DB error'
+                        if(result) {
+                            // 단어장 삭제 성공을 시스템 로그에 기록
+                            connection.query(`INSERT INTO system_log(log_type, log_content, log_date, log_ip) VALUES('Delete Words', 'Delete Words Success ${req.params.id} with ${APIusername}', '${today}', '${Ip.address()}')`, function(err, result) {
+                                return res.status(200).json({
+                                    success: true
+                                }); // 단어장 삭제가 성공됨을 최종적으로 리턴
                             });
-                        });
-                    }
-    
-                });
+                        } else {
+                            // 단어장 삭제 실패시 에러 로그에 기록
+                            connection.query(`INSERT INTO system_error_log(log_type, log_content, log_error, log_date, log_ip) VALUES('Delete Words', 'Delete Words Failed(DB Error) ${req.params.id} with ${APIusername}', "${err}", '${today}', '${Ip.address()}')`, function(err, result) {
+                                return res.status(500).json({
+                                    success: false,
+                                    message: 'Unknown DB error'
+                                });
+                            });
+                        }
+        
+                    });
+                }
     
             });
             
@@ -291,33 +329,70 @@ router.get("/:id", function(req, res) {
         connection.query(`SELECT words_title, words_text, words_owner FROM words_info WHERE words_id = '${req.params.id}'`, function (err, result) {
 
             if(result.length <= 0 || result == null) {
-                return res.status(200).json({
-                    success: true,
-                    content: null
+                return res.status(404).json({
+                    success: false,
+                    message: 'The words does not exist'
                 });
             }
 
             if(result[0].words_owner != APIusername) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'You are not owner of this words'
+                const now_check_words_owner = result[0].words_owner;
+                connection.query(`SELECT class_name, class_id FROM class_info WHERE class_owner = '${APIusername}'`, function (err, result) {
+                    for(var i = 0; i < result.length; i++) {
+                        if(now_check_words_owner == result[i].class_id) break;
+                    }
+
+                    if(i == result.length) {
+                        connection.query(`SELECT class FROM user_info WHERE user_name = '${APIusername}'`, function (err, result) {
+                            for(var i = 0; i < result[0].class.split(',').length; i++) {
+                                if(result[0].class.split(',')[i] == now_check_words_owner) break;
+                            }
+
+                            if(i == result[0].class.split(',').length) {
+                                return res.status(400).json({
+                                    success: false,
+                                    message: 'You are not owner of this words'
+                                });
+                            } else {
+                                ready_return_words_detail();
+                            }
+                        });
+                    } else {
+                        ready_return_words_detail();
+                    }
                 });
+            } else {
+                ready_return_words_detail();
             }
 
-            var final_return_words_get = []; // 리턴 변수 선언
+            function ready_return_words_detail() {
+                var final_return_words_get = []; // 리턴 변수 선언
 
-            jwt.verify(result[0].words_text, process.env.JWT_SECRET,
-                function(err, decoded) {
-                    if(decoded) {
-                        final_return_words_get = decoded.final_return_words_mean_get;
+                jwt.verify(result[0].words_text, process.env.JWT_SECRET,
+                    function(err, decoded) {
+                        if(decoded) {
+                            final_return_words_get = decoded.final_return_words_mean_get;
+                        }
                     }
-                }
-            );
+                );
 
-            return res.status(200).json({
-                success: true,
-                content: { title: result[0].words_title, words: final_return_words_get, owner: result[0].words_owner }
-            });
+                if(/[0-9]/.test(result[0].words_owner) && result[0].words_owner.length == 18) {
+                    connection.query(`SELECT class_name FROM class_info WHERE class_id = '${result[0].words_owner}'`, function (err, result2) {
+                    
+                        return res.status(200).json({
+                            success: true,
+                            content: { title: result[0].words_title, words: final_return_words_get, owner: result2[0].class_name, owner_type: 'class' }
+                        });
+
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        content: { title: result[0].words_title, words: final_return_words_get, owner: result[0].words_owner, owner_type: 'user' }
+                    });
+                }
+
+            }
 
         });
         
@@ -338,14 +413,11 @@ router.get("/", function(req, res) {
 
         connection.query(`SELECT words_title, words_text, words_id FROM words_info WHERE words_owner = '${APIusername}'`, function (err, result) {
 
-            if(result.length <= 0) {
-                return res.status(200).json({
-                    success: true,
-                    content: null
-                });
-            }
-
             var final_return_words = [];
+
+            if(result.length <= 0) {
+                final_return_words = null;
+            }
 
             for(var i = 0; i < result.length; i++) {
                 jwt.verify(result[i].words_text, process.env.JWT_SECRET,
@@ -357,9 +429,85 @@ router.get("/", function(req, res) {
                 );
             }
 
-            return res.status(200).json({
-                success: true,
-                content: final_return_words
+            connection.query(`SELECT class FROM user_info WHERE user_name = '${APIusername}'`, function (err, result) {
+
+                let user_class_final_return_words = [];
+                let owner_class_final_return_words = [];
+
+                function record_user_class_words(class_id, i) {
+                    return new Promise(function(resolve, reject) {
+                        connection.query(`SELECT class_name, class_id FROM class_info WHERE class_id = '${class_id}'`, function (err, result) {
+                            user_class_final_return_words.push({ id: result[0].class_id, name: result[0].class_name, words: [] });
+
+                            connection.query(`SELECT words_title, words_text, words_id FROM words_info WHERE words_owner = '${class_id}'`, function (err, result) {
+                    
+                                for(var j = 0; j < result.length; j++) {
+                                    jwt.verify(result[j].words_text, process.env.JWT_SECRET,
+                                        function(err, decoded) {
+                                            if(decoded) {
+                                                user_class_final_return_words[i].words.push({ title: result[j].words_title, words: decoded.final_return_words_mean_get, id: result[j].words_id })
+                                            }
+                                        }
+                                    );
+                                }
+                                resolve();
+
+                            });
+                        });
+                    });
+                }
+    
+                if(result[0].class == null || result[0].class == '') {
+                    user_class_final_return_words = null;
+
+                    connection.query(`SELECT class_name, class_id FROM class_info WHERE class_owner = '${APIusername}'`, function (err, result) {
+                        record_owner_class(result);
+                    });
+                } else {
+                    async function record_user_class() {
+                        for(var i = 0; i < result[0].class.split(',').length; i++) {
+                            await record_user_class_words(result[0].class.split(',')[i], i);
+                        }
+
+                        connection.query(`SELECT class_name, class_id FROM class_info WHERE class_owner = '${APIusername}'`, function (err, result) {
+                            record_owner_class(result);
+                        });
+                    }
+                    
+                    record_user_class();
+                }
+
+                function record_owner_class_words(class_id, i) {
+                    return new Promise(function(resolve, reject) {
+                        connection.query(`SELECT words_title, words_text, words_id FROM words_info WHERE words_owner = '${class_id}'`, function (err, result) {
+                
+                            for(var j = 0; j < result.length; j++) {
+                                jwt.verify(result[j].words_text, process.env.JWT_SECRET,
+                                    function(err, decoded) {
+                                        if(decoded) {
+                                            owner_class_final_return_words[i].words.push({ title: result[j].words_title, words: decoded.final_return_words_mean_get, id: result[j].words_id })
+                                        }
+                                    }
+                                );
+                            }
+                            resolve();
+
+                        });
+                    });
+                }
+
+                async function record_owner_class(result) {
+
+                    for(var i = 0; i < result.length; i++) {
+                        owner_class_final_return_words.push({ id: result[i].class_id, name: result[i].class_name, words: [] });
+                        await record_owner_class_words(result[i].class_id, i);
+                    }
+                    return res.status(200).json({
+                        success: true,
+                        content: { personal: final_return_words, user: user_class_final_return_words, owner: owner_class_final_return_words }
+                    });
+                }
+    
             });
         });
         
@@ -382,6 +530,10 @@ router.post("/", function(req, res) {
     // 변수 선언
     let body = req.body;
 
+    var newWordsOwner;
+    if(body.words_class == 'personal') newWordsOwner = APIusername;
+    else newWordsOwner = body.words_class;
+
     // 단어장 추가 시간
     const today = moment().format('YYYY-MM-DD HH:mm:ss');
 
@@ -394,6 +546,18 @@ router.post("/", function(req, res) {
             return res.status(400).json({
                 success: false,
                 message: 'Title must include only English, Korean and number'
+            });
+        }
+        if(body.words_title.length > 20) {
+            return res.status(400).json({
+                success: false,
+                message: 'Title is too long'
+            });
+        }
+        if(body.words_text.length > 100) {
+            return res.status(400).json({
+                success: false,
+                message: 'Words are too many'
             });
         }
 
@@ -411,7 +575,7 @@ router.post("/", function(req, res) {
                 // 18자리의 숫자로 이루어진 랜덤한 단어장 아이디를 생성함
                 function create_new_words_id() {
                     new_words_id = Math.floor(Math.random() * (999999999999999999 - 100000000000000000 + 1)) + 100000000000000000;
-                    connection.query(`SELECT * FROM words_info WHERE words_id = '${new_words_id}'`, function (err, result) {
+                    connection.query(`SELECT words_owner FROM words_info WHERE words_id = '${new_words_id}'`, function (err, result) {
                         if(result == null || !result[0]) return;
                         else create_new_words_id();
                     });
@@ -467,8 +631,8 @@ router.post("/", function(req, res) {
                                 wordsMeanToken = jwt.sign({ final_return_words_mean_get },
                                     process.env.JWT_SECRET
                                 );
-    
-                                connection.query(`INSERT INTO words_info(words_id, words_owner, words_title, words_text, createdAt, updatedAt) VALUES('${new_words_id}', '${APIusername}', '${words_title}', '${wordsMeanToken}', '${today}', '${today}')`, function (err, result) {
+
+                                connection.query(`INSERT INTO words_info(words_id, words_owner, words_title, words_text, createdAt, updatedAt) VALUES('${new_words_id}', '${newWordsOwner}', '${words_title}', '${wordsMeanToken}', '${today}', '${today}')`, function (err, result) {
     
                                     if(result) {
                                         // 단어장 생성 성공을 시스템 로그에 기록
@@ -499,7 +663,7 @@ router.post("/", function(req, res) {
                                 process.env.JWT_SECRET
                             );
 
-                            connection.query(`INSERT INTO words_info(words_id, words_owner, words_title, words_text, createdAt, updatedAt) VALUES('${new_words_id}', '${APIusername}', '${words_title}', '${wordsMeanToken}', '${today}', '${today}')`, function (err, result) {
+                            connection.query(`INSERT INTO words_info(words_id, words_owner, words_title, words_text, createdAt, updatedAt) VALUES('${new_words_id}', '${newWordsOwner}', '${words_title}', '${wordsMeanToken}', '${today}', '${today}')`, function (err, result) {
 
                                 if(result) {
                                     // 단어장 생성 성공을 시스템 로그에 기록

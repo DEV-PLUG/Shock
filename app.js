@@ -48,7 +48,7 @@ app.use("/api/", rateLimit({
 );
 app.use(rateLimit({ 
     windowMs: 1 * 60 * 1000, 
-    max: 1000
+    max: 300
     })
 );
 
@@ -60,20 +60,21 @@ var HomeRouter = require('./routes/home');
 var LoginRouter = require('./routes/login');
 var SignupRouter = require('./routes/signup');
 var DashboardRouter = require('./routes/dashboard');
-var TableRouter = require('./routes/table');
 var MobileRouter = require('./routes/mobile');
+var ServiceRouter = require('./routes/service');
 
 app.use('/dashboard', DashboardRouter);
 app.use('/mobile', MobileRouter);
+app.use('/service', ServiceRouter);
 app.use('/', HomeRouter);
 app.use('/login', LoginRouter);
 app.use('/signup', SignupRouter);
-app.use('/table', TableRouter);
 
 var APISignupRouter = require('./API/signup');
 var APILoginRouter = require('./API/login');
 var APILogoutRouter = require('./API/logout');
 var APIWordsRouter = require('./API/words');
+var APIClassRouter = require('./API/class');
 
 app.use('/logout', APILogoutRouter);
 
@@ -82,8 +83,14 @@ app.use('/logout', APILogoutRouter);
 app.use('/api/signup', APISignupRouter);
 app.use('/api/login', APILoginRouter);
 app.use('/api/words', APIWordsRouter);
+app.use('/api/class', APIClassRouter);
 
 // ----------------------------------------------------//
+
+// 에러 페이지 로드 404
+app.use(function(req, res) {
+    res.render("404.html");
+});
 
 // ----------------------------------------------------//
 

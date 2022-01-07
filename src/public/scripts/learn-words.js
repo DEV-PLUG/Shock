@@ -1,9 +1,15 @@
 $(".home-menu-box").load("/views/partials/dashboard-menu.html");
 
 $(document).ready(function () {
-    const words_id = location.href.split('/')[5].split('?')[0]
-    const words_type = location.href.split('/')[5].split('?')[1].split('=')[1]
-    console.log(words_type)
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    
+    gtag('js', new Date());
+
+    gtag('config', 'G-SWDY51DRVB');
+
+    const words_id = location.href.split('/')[5].split('?')[0];
+    const words_type = location.href.split('/')[5].split('?')[1].split('=')[1];
 
     var word_content;
     function load_words() {
@@ -14,6 +20,7 @@ $(document).ready(function () {
                 if (result) {
                     if(result.success == true) {
                         word_content = result.content;
+                        console.log(result.content)
 
                         document.querySelector('#before').classList.add('btn-gray-disabled');
                         document.querySelector('#before').classList.remove('btn-gray');
@@ -35,7 +42,24 @@ $(document).ready(function () {
                 }
             },
             error: function(request, status, error) {
-                display_message('알 수 없는 오류가 발생했습니다.(2)', 'red');
+                if(request.status == 429) { // too many request
+                    display_message('불러오기를 너무 많이 시도하셨습니다.', 'red')
+                }
+                else if(request.responseJSON.message == 'The words does not exist') {
+                    document.querySelector('.words-word').style.fontSize = '40px';
+                    document.querySelector('.words-mean').style.fontSize = '20px';
+                    document.querySelector('.words-word').innerText = '죄송합니다';
+                    document.querySelector('.words-mean').innerText = '존재하지 않거나 삭제된 단어장입니다.\n아이디를 다시 한번 확인해주세요.';
+                }
+                else if(request.responseJSON.message == 'You are not owner of this words') {
+                    document.querySelector('.words-word').style.fontSize = '40px';
+                    document.querySelector('.words-mean').style.fontSize = '20px';
+                    document.querySelector('.words-word').innerText = '죄송합니다';
+                    document.querySelector('.words-mean').innerText = '귀하께서는 해당 단어장의 소유자가 아닙니다. 아이디를 다시 한번 확인해주세요.';
+                }
+                else {
+                    display_message('알 수 없는 오류가 발생했습니다.(5)', 'red');
+                }
             }
         });
     }

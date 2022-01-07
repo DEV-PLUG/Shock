@@ -24,13 +24,22 @@
 
     <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
 
+    <meta name="twitter:url" content="http://shock-english.ml" />
+    <meta name="twitter:type" content="website" />
+    <meta name="twitter:title" content="Shock - 내가 골라 외우는 영단어" />
+    <meta name="twitter:description" content="소개합니다. 여러분의 영단어 외우기를 바꿀 Shock." />
+    <meta name="twitter:image" content="http://shock-english.ml/resources/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWDY51DRVB"></script>
+
     <title>Shock | 학습</title>
 </head>
 <body>
 
     <div class="modal-background">
         <div class="modal-box" id="print-words-modal">
-            <div class="flex-between">
+            <div class="flex-between modal-title-box">
                 <div class="modal-title">출력하기</div>
                 <div id="print-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
             </div>
@@ -66,7 +75,7 @@
         </div>
 
         <div class="modal-box" id="learn-words-modal">
-            <div class="flex-between">
+            <div class="flex-between modal-title-box">
                 <div class="modal-title">학습하기</div>
                 <div id="learn-words_close_id"><span class="material-icons modal-close-icon">clear</span></div>
             </div>
@@ -158,7 +167,7 @@
         </div>
 
         <div class="btn-loading-box2" id="words-load-loading-box"><div class="btn-loading-circle2"></div></div>
-        <div class="no-words">
+        <div class="no-words" style="display: none;">
             이런이런..! 아무런 단어장이 없어요!<br><br>
             <div class="btn-blue add-words-btn2"><span class="material-icons btn-icon">add_circle_outline</span>추가하기</div>
         </div>

@@ -63,17 +63,26 @@ function close_modal(id) {
 }
 function display_message(message, color) {
     $(".message-box").append(`<div class="message-content"><div class="message-content-line-${color}"></div><div class="message-content-text">${message}</div></div>`);
-    $(document.querySelectorAll('.message-content')[document.querySelectorAll('.message-content').length-1]).animate({
-        left: '0px',
-        opacity: '1'
-    }, 100);
+
+    if(navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)){
+        $(document.querySelectorAll('.message-content')[document.querySelectorAll('.message-content').length-1]).animate({
+            right: '0px',
+            opacity: '1'
+        }, 100);
+    } else {
+        $(document.querySelectorAll('.message-content')[document.querySelectorAll('.message-content').length-1]).animate({
+            left: '0px',
+            opacity: '1'
+        }, 100);
+    }
+    
     const message_content_el = document.querySelectorAll('.message-content')[document.querySelectorAll('.message-content').length-1];
-    setInterval(function(){
+    setTimeout(function(){
         $(message_content_el).animate({
             opacity: '0'
         }, 100, function() {
             message_content_el.style.display = 'none';
             $(message_content_el).remove();
         });
-    }, 5000);
+    }, 3000);
 }

@@ -9,38 +9,39 @@
     <link rel="stylesheet" type="text/css" href="/public/stylesheets/reset.css">
     <link rel="stylesheet" type="text/css" href="/public/stylesheets/basic.css">
     <link rel="stylesheet" type="text/css" href="/public/stylesheets/info-pages.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/service.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="/public/scripts/basic.js"></script>
-    <script src="/public/scripts/mobile.js"></script>
+    <script src="/public/scripts/service.js"></script>
     <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
 
-    <title>Shock | 모바일 기기 미지원</title>
+    <title>Shock | 서버 점검</title>
 </head>
 <body>
     <div class="modal-background">
-        <div class="modal-box" id="mobile-modal">
+        <div class="modal-box" id="service-modal">
             <div class="flex-between modal-title-box">
-                <div class="modal-title">서둘러 주세요!</div>
-                <div id="mobile_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+                <div class="modal-title">무슨 일인가요?</div>
+                <div id="service_close_id"><span class="material-icons modal-close-icon">clear</span></div>
             </div>
             <div class="modal-line"></div>
 
             <div class="modal-content" style="width: 450px; height: 65vh">
-                <div class="mobile-content-box">
-                    <h5>기다려 주셔서 감사드려요</h5>
-                    <h6>모바일 최적화는 많은 작업이 필요한 만큼 지금 당장은 적용할 수 없어요.<br><br>단, 유저가 150명 이상이 되고 여러분이 모바일 최적화를 바란다면 모바일 최적화를 바로 시작할게요!</h6>
-                    <a class="hurry-up-btn" id="copy-share-link">공유 링크 복사하기</a>
+                <div class="service-content-box">
+                    <h5>죄송합니다</h5>
+                    <h6>현재 예상치 않은 일이 발생해 서버를 긴급히 점검 중이에요.<br><br>예정된 정기 점검이 아니며, 언제 끝날지 알 수 없어요. 문의 사항은 서포트 서버를 찾아주세요.</h6>
+                    <a class="hurry-up-btn" id="support-server">서포트 서버 방문하기</a>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="box">
-        <span class="material-icons email-icon">app_blocking</span>
-        <h4 style="margin: 15px 0 0;">모바일 기기 미지원 안내</h3>
-        <h5>현재 Shock 서비스는 모바일 기기를 지원하지 않아요.<br>PC에서 이용해주세요.<br>모바일에서도 사용할 수 있도록 노력할게요!</h5>
-        <a class="hurry-up-btn">서둘러 주세요!</a>
+        <span class="material-icons email-icon">new_releases</span>
+        <h4 style="margin: 15px 0 0;">서버 점검 안내</h3>
+        <h5>죄송합니다, 현재 서버에 문제가 생겨 점검 중입니다.<br>지금은 서비스를 이용하실 수 없습니다.<br>이용에 불편을 드려 죄송합니다.</h5>
+        <a class="hurry-up-btn">무슨 일인가요?</a>
     </div>
 
     <div class="message-box"></div>

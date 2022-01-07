@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/basic.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/home.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/class-detail.css">
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/class.css">
+
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js?ver=1.4.2'></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="/public/scripts/basic.js"></script>
+    <script src="/public/scripts/class-detail.js" defer></script>
+
+    <meta name="twitter:url" content="http://shock-english.ml" />
+    <meta name="twitter:type" content="website" />
+    <meta name="twitter:title" content="Shock - 내가 골라 외우는 영단어" />
+    <meta name="twitter:description" content="소개합니다. 여러분의 영단어 외우기를 바꿀 Shock." />
+    <meta name="twitter:image" content="http://shock-english.ml/resources/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/png" href="/resources/favicon-png1.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWDY51DRVB"></script>
+
+    <title>Shock | 클래스 상세</title>
+</head>
+<body>
+
+    <div class="home-menu-box"></div>
+
+    <div class="modal-background">
+        <div class="modal-box" id="manage-class-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">클래스 관리하기</div>
+                <div id="manage-class_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="input_box">
+                    <div class="input_title">클래스 이름</div>
+                    <input type="text" placeholder="클래스 이름을 입력해주세요." maxlength="20" id="edit-class-title" autocomplete="off">
+                    <div class="input_labels_box flex-between">
+                        <div class="input_label">클래스 이름을 입력해주세요.</div>
+                        <div class="input_text_num_label">최대 20자</div>
+                    </div>
+                </div>
+                <div class="input_box">
+                    <div class="input_title">클래스 설명</div>
+                    <textarea type="text" placeholder="클래스 설명을 입력해주세요." maxlength="50" id="edit-class-des" autocomplete="off"></textarea>
+                    <div class="input_labels_box flex-between">
+                        <div class="input_label">클래스 설명을 입력해주세요.</div>
+                        <div class="input_text_num_label">최대 50자</div>
+                    </div>
+                </div>
+                <div class="input_box">
+                    <div class="input_title">클래스 초대코드</div>
+                    <div class="class-invite-code-text">https://shock-english.ml/class/invite/test</div>
+                    <div class="flex">
+                        <div class="class-invite-code-btn" id="class-invite-code-btn-copy"><div class="btn-icon material-icons">content_copy</div></div>
+                        <div class="class-invite-code-btn" id="class-invite-code-btn-refresh"><div class="btn-icon material-icons">refresh</div><div class="btn-loading-box" id="refresh-invite-code-btn-loading-box"><div class="btn-loading-circle"></div></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-between manage-class-modal-end">
+                    <div class="btn-red flex" id="delete-class-btn">삭제하기</div>
+                    <div class="btn-blue flex" id="manage-class_next_btn"><div class="btn-loading-box" id="manage-class-btn-loading-box"><div class="btn-loading-circle"></div></div>저장하기</div>
+                </div>
+                <h6 class="modal-end-footer" id="delete-class-btn">클래스를 삭제하려면 이곳을 클릭하세요</h6>
+            </div>
+        </div>
+
+        <div class="modal-box" id="add-log-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">학습 기록 추가하기</div>
+                <div id="add-log_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="modal-add-log-content1">
+                    <div class="input_box">
+                        <div class="input_title">학생</div>
+                    </div>
+                    <div class="select">
+                        <div class="flex-between select-box add-log-student-select" id="add-log-student-select" onclick="select('add-log-student')">
+                            <div class="selected-option add-log-student-selected-option" id="add-log-student-selected-option">-</div>
+                            <div class="select-arrow add-log-student-select-arrow" id="add-log-student-select-arrow"></div>
+                        </div>
+                        <div class="option-box add-log-student-option-box" id="add-log-student-option-box">
+                        </div>
+                    </div>
+                    <div class="input_box">
+                        <div class="input_title">단어장</div>
+                    </div>
+                    <div class="select">
+                        <div class="flex-between select-box add-log-words-select" id="add-log-words-select" onclick="select('add-log-words')">
+                            <div class="selected-option add-log-words-selected-option" id="add-log-words-selected-option">-</div>
+                            <div class="select-arrow add-log-words-select-arrow" id="add-log-words-select-arrow"></div>
+                        </div>
+                        <div class="option-box add-log-words-option-box" id="add-log-words-option-box"></div>
+                    </div>
+                    <div class="flex words-count-info add-log-words-count-info">
+                        <div class="btn-icon material-icons">info</div>
+                        학생과 단어장을 선택해 학습 기록을 입력하세요.<br> 최대 30개를 생성할 수 있어요.<br> 추후 기간 선택후 틀린 문제만 선택해 출력할 수 있어요.
+                    </div>
+                </div>
+                <div class="modal-add-log-content2">
+                    <div class="input_box">
+                        <div class="input_title">틀린 단어를 선택해주세요.</div>
+                    </div>
+                    <div class="modal-add-log-content2-box"></div>
+                    <div class="flex words-count-info add-log-words-count-info">
+                        <div class="btn-icon material-icons">info</div>
+                        중복된 단어가 있는 경우 선택되지 않을 수 있어요.<br> 이 경우 단어장을 수정해주세요.
+                    </div>
+                </div>
+                <div class="modal-add-log-content3">
+                    <video width="80" id="add-log-check">
+                        <source id="add-log-check-source" type="video/mp4" src="/resources/check.mp4"/>
+                    </video>
+                    <div class="add-log-check-img"></div>
+                    <div class="add-log-check-title">학습 기록 생성 완료</div>
+                    <div class="add-log-check-des">학습 기록 생성을 완료했어요!</div>
+                </div>
+            </div>
+
+            <div class="modal-end add-log-modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="add-log_next_btn"><div class="btn-loading-box" id="add-log-btn-loading-box"><div class="btn-loading-circle"></div></div>다음</div>
+                    <div class="btn-blue flex" id="add-log_next_btn2"><div class="btn-loading-box" id="add-log-btn-loading-box2"><div class="btn-loading-circle"></div></div>추가하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="delete-log-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">학습 기록 삭제하기</div>
+                <div id="delete-log_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <h3 class="modal-warn-title">해당 학습 기록을<br>삭제하시겠어요?</h3>
+                <h6 class="modal-warn-des">학습 기록을 삭제하면 되돌릴 수 없어요.</h6>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-red flex" id="delete_log_next_btn"><div class="btn-loading-box" id="delete_log-btn-loading-box"><div class="btn-loading-circle"></div></div>삭제하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="delete-class-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">클래스 삭제하기</div>
+                <div id="delete-class_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <div class="modal-delete-class-content1">
+                    <h3 class="modal-warn-title">이 클래스를<br>삭제하시겠어요?</h3>
+                    <h6 class="modal-warn-des">이 클래스에 소속되어 있던 단어장,<br> 학습기록이 모두 삭제되고 되돌릴 수 없어요.</h6>
+                </div>
+                <div class="modal-delete-class-content2">
+                    <div class="input_box">
+                        <div class="input_title">클래스 이름</div>
+                        <input type="text" placeholder="클래스 이름을 입력해주세요." maxlength="20" id="confirm-class-title" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-red flex" id="delete-class_next_btn">삭제하기</div>
+                    <div class="btn-red flex" id="delete-class_next_btn2"><div class="btn-loading-box" id="delete-class-btn-loading-box"><div class="btn-loading-circle"></div></div>클래스 영구 삭제하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="kick-student-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">학생 추방하기</div>
+                <div id="kick-student_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <h3 class="modal-warn-title">해당 학생을<br>추방하시겠어요?</h3>
+                <h6 class="modal-warn-des">학생을 추방해도, <br>클래스 초대 링크가 있으면 다시 들어올 수 있어요.<br> 또한, 해당 학생의 학습 기록은 삭제되지 않아요.</h6>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-red flex" id="kick_student_next_btn"><div class="btn-loading-box" id="kick_student-btn-loading-box"><div class="btn-loading-circle"></div></div>추방하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="out-class-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">클래스 나가기</div>
+                <div id="out-class_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content" style="width: 450px">
+                <h3 class="modal-warn-title">이 클래스를<br>나가시겠어요?</h3>
+                <h6 class="modal-warn-des">클래스를 나가도, <br>클래스 초대 링크가 있으면 다시 들어올 수 있어요.</h6>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-red flex" id="out_class_next_btn"><div class="btn-loading-box" id="out_class-btn-loading-box"><div class="btn-loading-circle"></div></div>나가기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-box" id="edit-log-modal">
+            <div class="flex-between modal-title-box">
+                <div class="modal-title">학습 기록 수정하기</div>
+                <div id="edit-log_close_id"><span class="material-icons modal-close-icon">clear</span></div>
+            </div>
+            <div class="modal-line"></div>
+
+            <div class="modal-content modal-edit-log-content" style="width: 450px">
+                <div class="input_box">
+                    <div class="input_title">틀린 단어를 선택해주세요.</div>
+                </div>
+
+                <div class="modal-edit-log-content-box"></div>
+                
+                <div class="flex words-count-info add-log-words-count-info">
+                    <div class="btn-icon material-icons">info</div>
+                    중복된 단어가 있는 경우 선택되지 않을 수 있어요.<br> 이 경우 단어장을 수정해주세요.
+                </div>
+            </div>
+
+            <div class="modal-end">
+                <div class="modal-line"></div>
+                <div class="flex-end">
+                    <div class="btn-blue flex" id="edit_log_next_btn"><div class="btn-loading-box" id="edit_log-btn-loading-box"><div class="btn-loading-circle"></div></div>수정하기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="class-box">
+        <div class="flex-between class_main_box" style="flex-wrap: wrap;">
+            <div class="flex class_main_title_box" style="flex-wrap: wrap;">
+                <h3>클래스</h3>
+                <div class="class_name">-</div>
+            </div>
+            <div class="flex" style="flex-wrap: wrap;">
+                <div class="student_btn_box" style="display: none;">
+                    <div class="btn-blue out-class-btn"><span class="material-icons btn-icon">logout</span>클래스 나가기</div>
+                </div>
+                <div class="owner_btn_box" style="display: none;">
+                    <div class="btn-blue manage-class-btn"><span class="material-icons btn-icon">settings</span>클래스 관리하기</div>
+                    <div class="btn-blue add-log-btn"><span class="material-icons btn-icon">add_circle_outline</span>학습 기록 추가하기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="class-detail-box-wrap"></div>
+
+        <div class="btn-loading-box2" id="class-load-loading-box"><div class="btn-loading-circle2"></div></div>
+        <div class="no-class" style="display: none;"></div>
+    </div>
+
+    <div class="message-box"></div>
+    <div class="message-box2"></div>
+
+</body>
+</html>

@@ -998,7 +998,8 @@ textarea:focus {
     display: none;
 }
 .modal-title {
-    font-size: 2rem;
+    font-size: 1.7rem;
+    line-height: 32px;
     font-weight: bold;
     color: #333333;
 }
@@ -1146,17 +1147,16 @@ td {
 
 .message-box2 {
     position: fixed;
-    left: 50%;
-    transform: translate(-50%, 0);
     bottom: 0px;
 
     z-index: 110;
 
-    width: 450px;
+    width: 100%;
     height: auto;
 
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 .message-content2 {
     width: 450px;
@@ -1173,14 +1173,13 @@ td {
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     background-color: rgba(0, 0, 0, 0.5);
-    margin: 20px 0 0;
+    margin: 20px auto 0;
 
     /* transition: .2s;
     transition-property: left;
     transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55); */
 
     position: relative;
-    left: 20px;
     opacity: 0;
 }
 .message-content-text2 {
@@ -1260,7 +1259,134 @@ td {
     background-color: #2ECC71;
 }
 
-@media all and (max-width: 1150px) {
+.modal-end-footer {
+    margin: 13px auto 5px;
+    text-align: center;
+    font-weight: normal;
+    color: #666666;
+    display: none;
+}
+
+@media all and (max-width: 1150px) and (min-width: 500px) {
+    .modal-box {
+        width: 500px;
+        position: absolute;
+        bottom: -100vh;
+
+        left: 50%;
+        transform: translate(-50%,0);
+
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        transition: .5s;
+        transition-property: bottom;
+        transition-timing-function: cubic-bezier(0.54, 0.1, 0.34, 1.09);
+    }
+    .modal-background {
+        position: fixed;
+        top: 0;
+        right: 0;
+    
+        width: 100%;
+        height: 100%;
+    
+        overflow: auto;
+        -ms-overflow-style: none;
+    }
+    .flex-end .btn-blue {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+    }
+    .flex-end .btn-blue-disabled {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+    }
+    .flex-end .btn-red {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+    }
+    .flex-end .btn-red-disabled {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+    }
+    .modal-background-focus .modal-box {
+        bottom: -5px !important;
+    }
+    .modal-box .modal-content {
+        width: 100% !important;
+        max-height: 60vh;
+        overflow: auto;
+    }
+    .modal-box .flex-between .modal-title {
+        font-size: 1.5rem;
+        line-height: 35px;
+    }
+    .modal-box .modal-content div .input_box:nth-child(1) .input_title {
+        margin: 0 0 5px;
+    }
+    .modal-title-box div:nth-child(2) {
+        width: 35px;
+        height: 35px;
+
+        padding: 5px;
+        box-sizing: border-box;
+
+        border-radius: 50px;
+        background-color: #ECECEC;
+    }
+    .modal-title-box div:nth-child(2):hover {
+        background-color: #e0e0e0;
+    }
+    .modal-title-box div:nth-child(2) .material-icons {
+        font-size: 25px !important;
+        width: 25px;
+        height: 25px;
+        color: #666666;
+    }
+}
+
+@media all and (max-width: 500px) {
+    .modal-end-footer {
+        display: block;
+    }
+    h1 {
+        font-size: 4rem;
+        color: #333333;
+    }
+    h2 {
+        font-size: 3rem;
+        color: #333333;
+    }
+    h3 {
+        font-size: 2rem;
+        color: #333333;
+    }
+    h4 {
+        font-size: 2rem;
+        color: #333333;
+    }
+    h5 {
+        font-size: 1rem;
+        color: #333333;
+    }
+    h6 {
+        font-size: 0.8rem;
+        color: #333333;
+    }
+
+    input {
+        border: 1.5px solid #666666
+    }
+
     .modal-box {
         width: 100%;
         position: absolute;
@@ -1269,9 +1395,9 @@ td {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
 
-        transition: .3s;
+        transition: .5s;
         transition-property: bottom;
-        transition-timing-function: cubic-bezier(0.33, 0.01, 0.25, 0.99);
+        transition-timing-function: cubic-bezier(0.54, 0.1, 0.34, 1.09);
     }
     .modal-background {
         position: fixed;
@@ -1285,16 +1411,70 @@ td {
         -ms-overflow-style: none;
     }
     .modal-background-focus .modal-box {
-        bottom: -2px !important;
+        bottom: -5px !important;
     }
     .modal-box .modal-content {
         width: 100% !important;
+        max-height: 60vh;
+        overflow: auto;
+    }
+    .flex-end .btn-blue {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+        font-weight: 400;
+    }
+    .flex-end .btn-blue-disabled {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+        font-weight: 400;
+    }
+    .flex-end .btn-red {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+        font-weight: 400;
+    }
+    .flex-end .btn-red-disabled {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        border-radius: 15px;
+        font-weight: 400;
     }
     .modal-box .flex-between .modal-title {
         font-size: 1.5rem;
         line-height: 35px;
     }
-    .modal-box .flex-between div:nth-child(2) {
+    input {
+        width: 100% !important;
+    }
+    .edit-words-text {
+        width: 100% !important;
+    }
+    .input_labels_box {
+        width: 100%;
+    }
+    .select-box {
+        width: 100%;
+    }
+    .option-box {
+        width: 100%;
+    }
+    .option {
+        width: 100%;
+    }
+    textarea {
+        width: 100%;
+    }
+    .modal-box .modal-content div .input_box:nth-child(1) .input_title {
+        margin: 0 0 5px;
+    }
+    .modal-title-box div:nth-child(2) {
         width: 35px;
         height: 35px;
 
@@ -1304,10 +1484,10 @@ td {
         border-radius: 50px;
         background-color: #ECECEC;
     }
-    .modal-box .flex-between div:nth-child(2):hover {
+    .modal-title-box div:nth-child(2):hover {
         background-color: #e0e0e0;
     }
-    .modal-box .flex-between div:nth-child(2) .material-icons {
+    .modal-title-box div:nth-child(2) .material-icons {
         font-size: 25px !important;
         width: 25px;
         height: 25px;
@@ -1315,11 +1495,76 @@ td {
     }
 
     .message-box {
-        right: 20px;
-        bottom: 20px;
-        width: 90%;
+        left: 10%;
+        bottom: 40px;
+        width: 80%;
     }
     .message-content {
-        width: 90%;
+        width: 100%;
+        left: auto;
+        right: 20px;
+    }
+    .message-box2 {
+        width: 100%;
+    }
+    .message-content2 {
+        width: 80%;
+    }
+
+    .modal-line {
+        margin: 10px 0;
+        background-color: white;
+    }
+
+    .input_box .input_title {
+        font-size: 0.9rem;
+    }
+    .input_box input[type="text"] {
+        border: 1.8px solid #666666;
+    }
+    .input_box input[type="text"]:hover {
+        border: 1.8px solid #333333;
+    }
+    .input_box input[type="text"]:focus {
+        border: 1.8px solid #1A73E8;
+    }
+    .input_box input[type="password"] {
+        border: 1.8px solid #666666;
+    }
+    .input_box input[type="password"]:hover {
+        border: 1.8px solid #333333;
+    }
+    .input_box input[type="password"]:focus {
+        border: 1.8px solid #1A73E8;
+    }
+    textarea {
+        border: 1.8px solid #666666;
+    }
+    textarea:focus {
+        border: 1.8px solid #1A73E8 !important;
+    }
+    textarea:hover {
+        border: 1.8px solid #333333;
+    }
+    .input-red {
+        border: 1.8px solid #E74C3C !important;
+    }
+    .input-green {
+        border: 1.8px solid #2ECC71 !important;
+    }
+    .input-yellow {
+        border: 1.8px solid #F1C40F !important;
+    }
+    .input-disabled {
+        border: 1.8px solid rgba(102, 102, 102, 0.7) !important;
+    }
+    .select-box {
+        border: 1.8px solid #666666;
+    }
+    .select-box:hover {
+        border: 1.8px solid #333333;
+    }
+    .select-focus {
+        border: 1.8px solid #1A73E8 !important;
     }
 }

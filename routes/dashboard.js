@@ -35,13 +35,29 @@ router.get('/class', function(req, res) {
     else res.redirect("/login");
 
 });
+router.get('/class/:id', function(req, res) {
+
+    var APIusername = check_user(req.session);
+
+    if(APIusername != 401) res.render("class-detail.html"); // 로그인 여부 확인
+    else res.redirect("/login");
+
+});
+router.get('/class/invite/:invite_code', function(req, res) {
+
+    var APIusername = check_user(req.session);
+
+    if(APIusername != 401) res.render("invite.html"); // 로그인 여부 확인
+    else res.redirect(`/login?redirect=invite-${req.params.invite_code}`);
+
+});
 
 router.get('/words/share/:id', function(req, res) {
 
     var APIusername = check_user(req.session);
 
     if(APIusername != 401) res.render("share.html"); // 로그인 여부 확인
-    else res.redirect("/login");
+    else res.redirect(`/login?redirect=share-${req.params.id}`);
 
 });
 

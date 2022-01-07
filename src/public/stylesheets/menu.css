@@ -110,12 +110,75 @@
     margin: 0 0 0 20px;
 }
 
+.mobile-menu-background {
+    display: none;
+}
+.mobile {
+    display: none;
+}
+
 @media all and (max-width: 1150px) {  
     .home-menu {
-        padding: 10px 20px;
+        padding: 10px 20px !important;
     }
+}
 
-    .menu-menu-text {
-        padding: 0 5px;
+@media all and (max-width: 1000px) {  
+
+    .not-mobile {
+        display: none;
+    }
+    .mobile {
+        width: 100%;
+        display: block;
+    }
+    
+    .mobile-menu-background {
+        width: 100%;
+        height: 0;
+        background-color: white;
+        position: fixed;
+        z-index: 111;
+        top: 0;
+        /* display: block; */
+
+        padding: 10px 20px;
+        box-sizing: border-box;
+
+        transition: .2s;
+    }
+    .mobile-menu-close {
+        width: 25px;
+        height: 25px;
+        margin: 15px;
+    }
+    .mobile-menu-close .material-icons {
+        font-size: 25px !important;
+    }
+    .mobile-menu-open {
+        width: 25px;
+        height: 25px;
+        margin: 15px;
+    }
+    .mobile-menu-open .material-icons {
+        font-size: 25px !important;
+    }
+    .mobile-menu-background .flex-between {
+        margin: 0 0 20px;
+    }
+    .mobile-menu-background .menu-menu-text {
+        padding: 3px 20px;
+        width: 50px;
+        display: block;
+        line-height: 30px;
+        height: 30px;
+    }
+    .menu-Sellation-login-btn {
+        margin: 40px 0 0;
+        width: 130px;
+        background-color: #ECECEC;
+    }
+    .menu-Sellation-login-btn:hover {
+        background-color: #CECECE;
     }
 }

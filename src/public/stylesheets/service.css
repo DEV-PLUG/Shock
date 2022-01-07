@@ -1,0 +1,69 @@
+.hurry-up-btn {
+    width: auto;
+    height: 60px;
+
+    font-size: 1.1rem;
+
+    padding: 0 30px;
+    box-sizing: border-box;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    margin: 25px 0 0;
+
+    color: white;
+
+    text-align: center;
+    line-height: 60px;
+
+    border-radius: 5px;
+
+    background-color: #1A73E8;
+    box-shadow: 0 0 20px rgb(26 104 206 / 40%);
+
+    transition: .2s;
+    transition-property: background-color;
+
+    cursor: pointer;
+}
+.hurry-up-btn:hover {
+    background-color: #1A68CE;
+}
+
+.service-content-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+}
+.service-content-box h5 {
+    font-size: 3rem !important;
+    font-weight: bold;
+    line-height: 3rem;
+    word-break: keep-all;
+}
+.service-content-box h6 {
+    word-break: keep-all;
+    margin: 30px 0 0;
+    font-size: 1.1rem;
+}
+
+@media all and (max-width: 1150px) {
+    .hurry-up-btn {
+        height: 50px;
+        font-size: 1rem;
+        line-height: 50px;
+    }
+    .service-content-box h5 {
+        font-size: 2rem !important;
+    }
+    .service-content-box h6 {
+        margin: 20px 0 0;
+        font-size: 1rem;
+    }
+}
