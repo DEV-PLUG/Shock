@@ -3,7 +3,7 @@
 [![Patreon](https://img.shields.io/badge/Sponsor-Patreon-critical)](https://www.patreon.com/bePatron?u=64697816)
 <img src="https://img.shields.io/badge/Language-Node.js-green" />
 
-## ❓ Shock 서비스가 뭐에요?   
+## ❓ Shock 서비스가 무엇인가요?   
 - **Shock**는 **<u>내가 직접 고른 영단어를 쉽게 외울 수 있게</u>** 하기 위해 만들었습니다.  
 - 처음에는 가족의 부탁으로 만들어서, 조금씩 살을 붙이다 보니 이렇게 되었습니다.
 - 많은 지식이 없기도 하고, 처음으로 끝까지 만들어본 Node.js 프로젝트인 만큼 기술적으로 부족한 점이 산더미입니다.. 답답하시더라도 넓은 마음으로 양해 부탁드려요 😋
@@ -15,9 +15,7 @@
 3. 클래스 기능에서는 학생을 초대하고, 클래스 전용 단어장 보관함에 단어장을 생성하고 학생들과 자동으로 공유할 수 있어요!
 
 ## 🎫 서비스에 관심이 있으신가요?
-현재 Shock 서비스는 지출 문제로 호스팅을 중단한 상태에요..<br>
 Shock 서비스에 관심이 있으시다면 [이곳](https://github.com/DEV-PLUG/Shock/blob/main/Shock-Service.pdf)에서 서비스 소개서를 읽어주세요.<br>
-관련해서 [후원](https://www.patreon.com/bePatron?u=64697816)이나 외주를 맡기시려면 언제든 제게 연락 주세요!
 
 ## 📑감사
 
